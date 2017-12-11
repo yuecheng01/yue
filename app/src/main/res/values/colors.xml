@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#1A8EA8</color>
+    <color name="colorPrimaryDark">#1A8EA8</color>
+    <color name="colorAccentred">#FC3E32</color>
+    <color name="colorAccentblue">#1A8EA8</color>
+    <color name="colorAccentpurple">#7F00FF</color>
+    <color name="colorAccenthardwareblack">#2c2e2e</color>
+    <color name="colorAccent">#1A8EA8</color>
+    <color name="white">#ffffff</color>
+    <!--状态栏颜色-->
+    <color name="actback">#00000000</color>
+
+    <!--login & register color-->
+    <color name="btn_register_normal">#ffffff</color>
+    <color name="btn_register_pressed">#DDDDDD</color>
+
+
+    <color name="FC3E32">#FC3E32</color>
+    <color name="F888888">#888888</color>
+    <color name="red">#FC3E32</color>
+
+    <!--重新定制toast背景颜色以及字体颜色-->
+    <color name="toastbackground">#333333</color>
+    <color name="toastextcolor">#ffffff</color>
+    <color name="f0f0f0">#f0f0f0</color>
+
+    <color name="bantouming">#40000000</color>
+    <color name="touming">#00000000</color>
+
+    <color name="colorTextError">#FF0000</color>
+    <color name="H333333">#333333</color>
+    <color name="cursor">#0080ff</color>
+    <color name="group_list_gray">#999999</color>
+
+    <color name="btn_cancel_color">#999999</color>
+    <color name="btn_confirm_color">#303F9F</color>
+</resources>

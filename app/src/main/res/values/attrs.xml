@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr name="dialogTextColor" format="reference" />
+
+    <!--date and time picker pop-->
+    <declare-styleable name="LoopView">
+        <attr name="lineColor" format="color|reference"/>
+        <attr name="topBottomTextColor" format="color|reference"/>
+        <attr name="centerTextColor" format="color|reference"/>
+        <attr name="picktextSize" format="dimension|reference"/>
+        <attr name="canLoop" format="boolean"/>
+        <attr name="initPosition" format="integer"/>
+        <attr name="drawItemCount" format="integer"/>
+    </declare-styleable>
+</resources>

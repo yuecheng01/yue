@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="chat">发起会话</string>
+    <string name="yuyin">语音聊天</string>
+    <string name="shipin">视频聊天</string>
+</resources>

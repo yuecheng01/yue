@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="rememberpwdcheck" parent="@android:style/Widget.Material.CompoundButton.CheckBox">
+        <item name="android:colorControlActivated">@color/colorAccent</item>
+        <item name="android:colorControlNormal">@color/colorPrimary</item>
+    </style>
+
+    <!--<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        &lt;!&ndash; Customize your theme here. &ndash;&gt;
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:navigationBarColor">@color/actback</item>
+    </style>-->
+
+        <!--app _____________________________________________________________________________________________________________________them-->
+    <style name="AppThemeDefault" parent="defaultThem">
+        <item name="android:textColorHint">@color/white</item>
+        <item name="android:statusBarColor">@color/actback</item>
+        <item name="android:colorControlNormal" >@color/white</item>
+        <item name="android:colorControlActivated" >@color/white</item>
+        <item name="android:colorControlHighlight" >@color/white</item>
+        <item name="android:windowTranslucentStatus" >true</item>
+        <item name="android:textColorSecondary">@color/white</item>
+    </style>
+    <style name="AppThemeRed" parent="RedThem">
+        <item name="android:textColorHint">@color/white</item>
+        <item name="android:statusBarColor">@color/actback</item>
+        <item name="android:colorControlNormal" >@color/white</item>
+        <item name="android:colorControlActivated" >@color/white</item>
+        <item name="android:colorControlHighlight" >@color/white</item>
+        <item name="android:windowTranslucentStatus" >true</item>
+        <item name="android:textColorSecondary">@color/white</item>
+    </style>
+    <style name="AppThemePurple" parent="PurpleThem">
+        <item name="android:textColorHint">@color/white</item>
+        <item name="android:statusBarColor">@color/actback</item>
+        <item name="android:colorControlNormal" >@color/white</item>
+        <item name="android:colorControlActivated" >@color/white</item>
+        <item name="android:colorControlHighlight" >@color/white</item>
+        <item name="android:windowTranslucentStatus" >true</item>
+        <item name="android:textColorSecondary">@color/white</item>
+    </style>
+    <style name="AppThemeHardwareblack" parent="HardwareblackThem">
+        <item name="android:textColorHint">@color/white</item>
+        <item name="android:statusBarColor">@color/actback</item>
+        <item name="android:colorControlNormal" >@color/white</item>
+        <item name="android:colorControlActivated" >@color/white</item>
+        <item name="android:colorControlHighlight" >@color/white</item>
+        <item name="android:windowTranslucentStatus" >true</item>
+        <item name="android:textColorSecondary">@color/white</item>
+    </style>
+
+    <!--app _____________________________________________________________________________________________________________________them-->
+</resources>
