@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/f0f0f0"
+    android:orientation="vertical">
+
+
+    <io.rong.imkit.widget.AsyncImageView
+        android:id="@+id/img_Group_portrait"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="80dp"
+        android:src="@drawable/add_group_head" />
+
+    <EditText
+        android:id="@+id/create_groupname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginRight="35dp"
+        android:background="@null"
+        android:layout_marginTop="80dp"
+        android:gravity="center"
+        android:hint="填写群名称(2-10字)"
+        android:maxLength="10" />
+
+    <Button
+        android:id="@+id/create_ok"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:text="@string/rc_confirm"
+        android:textColor="#FFF" />
+
+</LinearLayout>

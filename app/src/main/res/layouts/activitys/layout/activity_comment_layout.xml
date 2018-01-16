@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+    <include layout="@layout/common_titlebar_layout"/>
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/commentrefresh"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/commentlist"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            ></android.support.v7.widget.RecyclerView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp48"
+        android:gravity="center"
+        android:background="@drawable/menu"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_marginLeft="@dimen/dp8"
+            android:layout_height="match_parent">
+            <EditText
+                android:id="@+id/commentwrite"
+                android:layout_width="match_parent"
+                android:background="@null"
+                android:textCursorDrawable="@drawable/color_cursor"
+                android:layout_height="wrap_content" />
+            <View
+                android:layout_width="match_parent"
+                android:background="#ff000000"
+                android:layout_height="0.1dp"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/bt_send"
+            android:layout_width="@dimen/dp56"
+            android:layout_height="@dimen/dp32"
+            android:gravity="center"
+            android:textSize="@dimen/sp10"
+            android:textColor="@color/white"
+            android:layout_marginRight="@dimen/dp8"
+            android:text="发送"
+            android:layout_marginLeft="@dimen/dp16"
+            />
+    </LinearLayout>
+</LinearLayout>

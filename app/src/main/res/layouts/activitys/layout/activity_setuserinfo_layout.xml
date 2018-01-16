@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/f0f0f0"
+    android:fitsSystemWindows="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/common_titlebar_layout" />
+
+    <com.yuecheng.yue.widget.YUE_DampScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/setusericon"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp48"
+                android:layout_marginTop="@dimen/dp16"
+                android:background="@drawable/btn_list_item_bg"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="@dimen/dp0"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/dp16"
+                    android:layout_weight="1"
+                    android:text="@string/setusericon"
+                    android:textSize="@dimen/sp14" />
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="@dimen/dp16"
+                    android:src="@drawable/right_arrow__shap" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/setuserdisplay"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp48"
+                android:layout_marginTop="@dimen/dp16"
+                android:background="@drawable/btn_list_item_bg"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/dp16"
+                    android:text="@string/setuserdisplay"
+                    android:textSize="@dimen/sp14" />
+
+                <TextView
+                    android:id="@+id/userdisplay"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:gravity="center_vertical"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/dp16"
+                    android:layout_marginRight="@dimen/dp16" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp" />
+
+            <LinearLayout
+                android:id="@+id/setusernickname"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp48"
+                android:background="@drawable/btn_list_item_bg"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/dp16"
+                    android:text="@string/nickname"
+                    android:textSize="@dimen/sp14" />
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:textCursorDrawable="@drawable/color_cursor"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/dp16"
+                    android:layout_marginRight="@dimen/dp16"
+                    android:background="@null"
+                    android:hint="!悦城"
+                    android:maxLines="1" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp" />
+
+            <LinearLayout
+                android:id="@+id/setusersex"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp48"
+                android:background="@drawable/btn_list_item_bg"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/dp16"
+                    android:text="@string/sex"
+                    android:textSize="@dimen/sp14" />
+
+                <TextView
+                    android:id="@+id/usersex"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/dp16"
+                    android:layout_marginRight="@dimen/dp16" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp" />
+
+            <LinearLayout
+                android:id="@+id/setuserbirtyday"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp48"
+                android:background="@drawable/btn_list_item_bg"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/dp16"
+                    android:text="@string/birtyday"
+                    android:textSize="@dimen/sp14" />
+
+                <TextView
+                    android:id="@+id/userbirthday"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/dp16"
+                    android:layout_marginRight="@dimen/dp16" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp" />
+
+            <LinearLayout
+                android:id="@+id/setuserjob"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp48"
+                android:background="@drawable/btn_list_item_bg"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/dp16"
+                    android:text="@string/job"
+                    android:textSize="@dimen/sp14" />
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:textCursorDrawable="@drawable/color_cursor"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/dp16"
+                    android:layout_marginRight="@dimen/dp16"
+                    android:background="@null"
+                    android:hint="程序员" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp" />
+
+            <LinearLayout
+                android:id="@+id/setuserage"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp48"
+                android:background="@drawable/btn_list_item_bg"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/dp16"
+                    android:text="@string/company"
+                    android:textSize="@dimen/sp14" />
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:textCursorDrawable="@drawable/color_cursor"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/dp16"
+                    android:layout_marginRight="@dimen/dp16"
+                    android:background="@null"
+                    android:hint="京歌科技" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp" />
+
+            <LinearLayout
+                android:id="@+id/setusermail"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp48"
+                android:background="@drawable/btn_list_item_bg"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/dp16"
+                    android:text="@string/mail"
+                    android:textSize="@dimen/sp14" />
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:inputType="textEmailAddress"
+                    android:textCursorDrawable="@drawable/color_cursor"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/dp16"
+                    android:layout_marginRight="@dimen/dp16"
+                    android:background="@null"
+                    android:hint="1062258956@qq.com" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp" />
+
+            <LinearLayout
+                android:id="@+id/setuseraddress"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp48"
+                android:background="@drawable/btn_list_item_bg"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/dp16"
+                    android:text="@string/address"
+                    android:textSize="@dimen/sp14" />
+
+                <TextView
+                    android:id="@+id/address_select"
+                    android:layout_width="@dimen/dp0"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/dp16"
+                    android:layout_marginRight="@dimen/dp16"
+                    android:layout_weight="1"
+                    android:maxLines="1"
+                    android:text="杭州市"
+                    android:textSize="@dimen/sp14" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp48"
+                android:background="@drawable/btn_list_item_bg"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/dp16"
+                    android:text="@string/addressconfi"
+                    android:textSize="@dimen/sp14" />
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:inputType="text"
+                    android:textCursorDrawable="@drawable/color_cursor"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/dp16"
+                    android:layout_marginRight="@dimen/dp16"
+                    android:background="@null"
+                    android:hint="1062258956@qq.com" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp" />
+
+            <LinearLayout
+                android:id="@+id/setuserhomeaddress"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp48"
+                android:layout_marginBottom="@dimen/dp16"
+                android:background="@drawable/btn_list_item_bg"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/dp16"
+                    android:text="@string/homefamily"
+                    android:textSize="@dimen/sp14" />
+
+                <TextView
+                    android:id="@+id/homeaddress"
+                    android:layout_width="@dimen/dp0"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/dp16"
+                    android:layout_marginRight="@dimen/dp16"
+                    android:layout_weight="1"
+                    android:maxLines="1"
+                    android:text="湖北省"
+                    android:textSize="@dimen/sp14" />
+
+
+            </LinearLayout>
+        </LinearLayout>
+    </com.yuecheng.yue.widget.YUE_DampScrollView>
+</LinearLayout>

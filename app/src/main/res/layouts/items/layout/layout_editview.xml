@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/editTextBodyLl"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:gravity="center_vertical"
+    android:background="#f6f6f6"
+    android:orientation="horizontal"
+    android:visibility="gone"
+    >
+   <com.yuecheng.yue.widget.EmojiEditText.EmojiEditextView
+       android:id="@+id/emojiedit"
+       android:layout_gravity="center_vertical"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+
+   </com.yuecheng.yue.widget.EmojiEditText.EmojiEditextView>
+</LinearLayout>

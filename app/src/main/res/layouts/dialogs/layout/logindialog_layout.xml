@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+                android:background="@color/dialog_back"
+              android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/back"
+        android:layout_width="@dimen/dp32"
+        android:layout_height="@dimen/dp32"
+        android:padding="@dimen/dp4"
+        android:layout_marginTop="60dp"
+        android:layout_marginLeft="@dimen/dp16"
+        android:src="@drawable/left_arrow__shap"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="@dimen/dp16"
+        android:layout_marginRight="@dimen/dp16"
+        android:background="@color/touming"
+        android:orientation="vertical">
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:counterEnabled="true"
+            app:counterMaxLength="16"
+            app:errorTextAppearance="@style/TextErrorAppearance"
+            app:hintTextAppearance="@style/HintAppearance"
+            android:id="@+id/usernamecontainer"
+            >
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/username"
+                style="@style/login"
+                android:drawableRight="@drawable/ac_search_cancel_icon"
+                android:drawableEnd="@drawable/ac_search_cancel_icon"
+                android:hint="@string/usernamehint"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="?attr/colorPrimary"
+            app:hintTextAppearance="@style/HintAppearance"
+            android:layout_below="@id/usernamecontainer"
+            android:id="@+id/passwordcontainer"
+            >
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/password"
+                style="@style/register"
+                android:hint="@string/passwordhint"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <RelativeLayout
+            android:id="@+id/remenberandforget"
+            android:orientation="horizontal"
+            android:layout_below="@id/passwordcontainer"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp16">
+            <CheckBox
+                android:id="@+id/rememberpwd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:checked="false"
+                android:textSize="@dimen/sp12"
+                style="@style/rememberpwdcheck"
+                android:text="@string/remembername"/>
+            <TextView
+                android:id="@+id/forgetpassword"
+                style="@style/forgetpassword"
+                android:text="@string/forgetpassword"
+                />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/loginandreg"
+            android:layout_below="@id/remenberandforget"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+           <!-- <Button
+                android:id="@+id/canlelogin"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dp16"
+                android:layout_marginTop="@dimen/dp56"
+                android:layout_weight="1"
+                android:background="@drawable/button_register_bg"
+            android:text="@string/canlelogin"/>-->
+
+            <Button
+                android:id="@+id/login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp56"
+                android:layout_weight="1"
+                android:text="@string/login"
+                android:textColor="@color/white"/>
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>
