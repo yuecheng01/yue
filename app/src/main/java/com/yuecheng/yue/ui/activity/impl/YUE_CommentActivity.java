@@ -1,6 +1,5 @@
 package com.yuecheng.yue.ui.activity.impl;
 
-import android.annotation.SuppressLint;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -13,7 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import com.yuecheng.yue.R;
-import com.yuecheng.yue.base.YUE_BaseActivity;
+import com.yuecheng.yue.base.YUE_BaseActivitySlideBack;
 import com.yuecheng.yue.ui.activity.YUE_ICommentView;
 import com.yuecheng.yue.ui.presenter.YUE_CommentViewPresenter;
 import com.yuecheng.yue.util.CommonUtils;
@@ -25,7 +24,7 @@ import com.yuecheng.yue.widget.selector.YUE_BackResUtils;
  * Created by administraot on 2017/12/2.
  */
 
-public class YUE_CommentActivity extends YUE_BaseActivity implements YUE_ICommentView ,View.OnClickListener{
+public class YUE_CommentActivity extends YUE_BaseActivitySlideBack implements YUE_ICommentView ,View.OnClickListener{
     private RecyclerView mCommentList;
     private EditText mCommentWrite;
     private Button mBtnSend;

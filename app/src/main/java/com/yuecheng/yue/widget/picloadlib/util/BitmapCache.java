@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ImageView;
@@ -17,7 +18,7 @@ import java.io.IOException;
 import java.lang.ref.SoftReference;
 import java.util.HashMap;
 
-public class BitmapCache extends Activity {
+public class BitmapCache extends AppCompatActivity {
 
 	public Handler h = new Handler();
 	public final String TAG = getClass().getSimpleName();

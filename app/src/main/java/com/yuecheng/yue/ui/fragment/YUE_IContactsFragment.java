@@ -15,4 +15,6 @@ public interface YUE_IContactsFragment {
     void setpersonalUI(String mId, String mCacheName);
 
     List<YUE_FriendsBean> getFriendList();
+
+    void setRefreshCancle();
 }

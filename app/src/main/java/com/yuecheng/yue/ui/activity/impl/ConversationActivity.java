@@ -7,9 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.yuecheng.yue.R;
-import com.yuecheng.yue.base.YUE_BaseActivity;
-import com.yuecheng.yue.widget.picloadlib.view.AlbumActivity;
-import com.yuecheng.yue.widget.picloadlib.view.ImageFile;
+import com.yuecheng.yue.base.YUE_BaseActivitySlideBack;
 
 import java.util.Locale;
 
@@ -20,7 +18,7 @@ import io.rong.imlib.model.Conversation;
  * Created by administraot on 2017/11/20.
  */
 
-public class ConversationActivity extends YUE_BaseActivity {
+public class ConversationActivity extends YUE_BaseActivitySlideBack {
 
    private Toolbar mToolBar;
 
@@ -45,7 +43,7 @@ public class ConversationActivity extends YUE_BaseActivity {
     private void initDataEvents() {
         Intent intent = getIntent();
         mTargetId = intent.getData().getQueryParameter("targetId");
-        //intent.getData().getLastPathSegment();//获得当前会话类型
+        //intent.getDataUpdateContact().getLastPathSegment();//获得当前会话类型
         mConversationType = Conversation.ConversationType.valueOf(intent.getData().getLastPathSegment().toUpperCase(Locale.getDefault()));
         initToolBar();
         enterFragment(mConversationType, mTargetId);

@@ -1,7 +1,6 @@
 package com.yuecheng.yue.ui.activity.impl;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,7 +10,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -26,20 +24,18 @@ import android.widget.Toast;
 
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 import com.yuecheng.yue.R;
-import com.yuecheng.yue.base.YUE_BaseActivity;
+import com.yuecheng.yue.base.YUE_BaseActivityNoSlideBack;
 import com.yuecheng.yue.ui.activity.YUE_IHomeView;
 import com.yuecheng.yue.ui.presenter.YUE_HomeViewPresenter;
 import com.yuecheng.yue.util.CommonUtils;
 import com.yuecheng.yue.widget.YUE_CircleImageView;
 import com.yuecheng.yue.widget.YUE_NoScrollListView;
-import com.yuecheng.yue.widget.dialogfragment.QRcodeView;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.List;
 
 
-public class YUE_HomeActivity extends YUE_BaseActivity implements YUE_IHomeView, View
+public class YUE_HomeActivity extends YUE_BaseActivityNoSlideBack implements YUE_IHomeView, View
         .OnClickListener {
     private RadioButton mChat;
     private RadioButton mContact;
@@ -106,7 +102,7 @@ public class YUE_HomeActivity extends YUE_BaseActivity implements YUE_IHomeView,
                 .toolbar_ic_back);
 
         mToolBarTitle.setText(getResources().getString(R.string.app_name));// TODO: 2017/11/5
-        mBackIcon.setImageDrawable(getResources().getDrawable(R.mipmap.yue));// TODO: 2017/11/5
+        mBackIcon.setImageDrawable(getResources().getDrawable(R.drawable.yue));// TODO: 2017/11/5
         mBackIcon.setOnClickListener(this);
         mToolBar.addView(view);
         setSupportActionBar(mToolBar);
@@ -118,17 +114,13 @@ public class YUE_HomeActivity extends YUE_BaseActivity implements YUE_IHomeView,
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_startchat:
-                        ShowMessage("发起聊天");
-//                        TODO
+                        startActivity(YUE_SelectFriendsActivity.class);
                         break;
                     case R.id.action_joinfriend:
-//                        ShowMessage("添加好友");
-//                        TODO
                         startActivity(YUE_SearchFriendActivity.class);
                         break;
                     case R.id.action_creategroup:
-                        ShowMessage("创建群组");
-//                        TODO
+                        startActivity(YUE_SelectFriendsActivity.class);
                         break;
                     case R.id.action_2weima:
 //                        QRcodeView  qrcode = QRcodeView.getInstance();
@@ -137,8 +129,7 @@ public class YUE_HomeActivity extends YUE_BaseActivity implements YUE_IHomeView,
                                 YUE_QRcodeActivity.class), REQUEST_CODE);
                         break;
                     case R.id.action_forhelp:
-                        ShowMessage("寻求帮助?");
-//                        TODO
+                        startActivity(YUE_ForHelpActivity.class);
                         break;
                 }
                 return true;

@@ -23,10 +23,10 @@ import com.yuecheng.yue.R;
 import com.yuecheng.yue.ui.bean.YUE_SPsave;
 import com.yuecheng.yue.util.CommonUtils;
 import com.yuecheng.yue.util.YUE_SharedPreferencesUtils;
+import com.yuecheng.yue.widget.photoview.PhotoView;
 import com.yuecheng.yue.widget.picloadlib.PhotoPickActivity;
 import com.yuecheng.yue.widget.picloadlib.util.Bimp;
 import com.yuecheng.yue.widget.picloadlib.util.PublicWay;
-import com.yuecheng.yue.widget.picloadlib.zoom.PhotoView;
 import com.yuecheng.yue.widget.picloadlib.zoom.ViewPagerFixed;
 import com.yuecheng.yue.widget.selector.YUE_BackResUtils;
 
@@ -146,14 +146,12 @@ public class GalleryActivity extends AppCompatActivity {
         return true;
     }
     private void initDataEvents() {
-        send_bt.setBackground(YUE_BackResUtils.getInstance(this).getRegDrawableSelector());
+        send_bt.setBackground(YUE_BackResUtils.getInstance(this).getLoginDrawableSelector());
         send_bt.setOnClickListener(new GallerySendListener());
         intent = getIntent();
         position = Integer.parseInt(intent.getStringExtra("position"));
-        isShowOkBt();
         // 为发送按钮设置文字
-        pager = (ViewPagerFixed) findViewById(R.id.gallery01);
-
+        isShowOkBt();
         pager.addOnPageChangeListener(pageChangeListener);
         for (int i = 0; i < Bimp.tempSelectBitmap.size(); i++) {
             initListViews( Bimp.tempSelectBitmap.get(i).getBitmap() );
@@ -169,29 +167,18 @@ public class GalleryActivity extends AppCompatActivity {
         if (listViews == null)
             listViews = new ArrayList<View>();
         PhotoView img = new PhotoView(this);
+        img.enable();
         img.setBackgroundColor(0xff000000);
         img.setImageBitmap(bm);
         img.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT));
         listViews.add(img);
     }
-    private ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
 
-        public void onPageSelected(int arg0) {
-            location = arg0;
-        }
-
-        public void onPageScrolled(int arg0, float arg1, int arg2) {
-
-        }
-
-        public void onPageScrollStateChanged(int arg0) {
-
-        }
-    };
 
     private void initViews() {
         send_bt = (Button) findViewById(R.id.send_button);
+        pager = (ViewPagerFixed) findViewById(R.id.gallery01);
     }
 
     public void isShowOkBt() {
@@ -235,23 +222,38 @@ public class GalleryActivity extends AppCompatActivity {
         }
         return true;
     }
+    private ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
+
+        public void onPageSelected(int arg0) {
+            location = arg0;
+        }
+
+        public void onPageScrolled(int arg0, float arg1, int arg2) {
+
+        }
+
+        public void onPageScrollStateChanged(int arg0) {
+
+        }
+    };
     private class MyPageAdapter extends PagerAdapter {
 
-        private ArrayList<View> listViews;
+        private ArrayList<View> listViews;// content
 
-        private int size;
+        private int size;// 页数
 
-        public MyPageAdapter(ArrayList<View> listViews) {
+        public MyPageAdapter(ArrayList<View> listViews) {// 构造函数
+            // 初始化viewpager的时候给的一个页面
             this.listViews = listViews;
             size = listViews == null ? 0 : listViews.size();
         }
 
-        public void setListViews(ArrayList<View> listViews) {
+        public void setListViews(ArrayList<View> listViews) {// 自己写的一个方法用来添加数据
             this.listViews = listViews;
             size = listViews == null ? 0 : listViews.size();
         }
 
-        public int getCount() {
+        public int getCount() {// 返回数量
             return size;
         }
 
@@ -259,16 +261,16 @@ public class GalleryActivity extends AppCompatActivity {
             return POSITION_NONE;
         }
 
-        public void destroyItem(View arg0, int arg1, Object arg2) {
-            ((ViewPagerFixed) arg0).removeView(listViews.get(arg1 % size));
+        public void destroyItem(View arg0, int arg1, Object arg2) {// 销毁view对象
+            ((ViewPager) arg0).removeView(listViews.get(arg1 % size));
         }
 
         public void finishUpdate(View arg0) {
         }
 
-        public Object instantiateItem(View arg0, int arg1) {
+        public Object instantiateItem(View arg0, int arg1) {// 返回view对象
             try {
-                ((ViewPagerFixed) arg0).addView(listViews.get(arg1 % size), 0);
+                ((ViewPager) arg0).addView(listViews.get(arg1 % size), 0);
 
             } catch (Exception e) {
             }
@@ -278,6 +280,7 @@ public class GalleryActivity extends AppCompatActivity {
         public boolean isViewFromObject(View arg0, Object arg1) {
             return arg0 == arg1;
         }
+
 
     }
 }

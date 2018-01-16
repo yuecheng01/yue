@@ -2,10 +2,15 @@ package com.yuecheng.yue.ui.interactor;
 
 import android.os.Handler;
 
+import com.yuecheng.yue.http.ICommonInteractorCallback;
+
 /**
  * Created by yuecheng on 2017/11/12.
  */
 
 public interface YUE_IContactsInteractor {
-    void getFriendsList(String getfriendslist, String usetId1, String statues, String userId, String s, int i, String tag, Handler handler);
+
+
+    void getFriendsList(String userId, String statues,ICommonInteractorCallback
+                        iCommonInteractorCallback);
 }

@@ -19,8 +19,6 @@ public interface YUE_ILoginView {
 
     void jumpToActivity(Class c);//跳转到其他活动
 
-    Handler getHandler();//交互更新UI
-
     void finishActivity();//跳转至主页结束掉自己
 
     void showMessage(String s);//弹出提示

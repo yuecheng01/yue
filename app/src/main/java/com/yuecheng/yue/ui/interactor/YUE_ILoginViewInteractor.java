@@ -2,19 +2,25 @@ package com.yuecheng.yue.ui.interactor;
 
 import android.os.Handler;
 
-import com.yuecheng.yue.ui.bean.YUE_LoginBean;
+import com.yuecheng.yue.http.ICommonInteractorCallback;
 
 /**
  * Created by yuecheng on 2017/11/5.
  */
 
 public interface YUE_ILoginViewInteractor {
-    void getLoginRequestData(String url,
-                 String key1, String key2,
-                 String param1, String param2,
-                 int what,String tag, Handler h);
-
+    void getLoginRequestData(String userId,String password, ICommonInteractorCallback l);
     void saveNandP(String phoneString, String passwordString);
 
     void saveRongToken(String token);
+
+    void saveRememberPwd();
+
+    void cancleRememberPwd();
+
+    String getUserName();
+
+    String getUserPassword();
+
+    String getIsRemPwd();
 }

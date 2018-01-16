@@ -31,9 +31,14 @@ import io.rong.imageloader.core.ImageLoader;
 public class YUE_CircleitemAdapter extends RecyclerView.Adapter<YUE_CircleitemAdapter.ViewHolder> {
     private List<YUE_CircleMomentsBean> mData;
     private List<String> mImgList;
-    public YUE_CircleitemAdapter(List<YUE_CircleMomentsBean> data) {
-        this.mData = data;
 
+    public YUE_CircleitemAdapter() {
+        super();
+    }
+
+    public void update(List<YUE_CircleMomentsBean> data) {
+        this.mData = data;
+        notifyDataSetChanged();
     }
 
     public static void setOnItemClickListener(OnItemClickListener listener) {
@@ -154,21 +159,23 @@ public class YUE_CircleitemAdapter extends RecyclerView.Adapter<YUE_CircleitemAd
             } else {
                 mHolder = (ViewHolder) convertView.getTag();
             }
-            ImageLoader.getInstance().displayImage(mImgList.get(i), mHolder.mImage);
-            mHolder.mImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            mHolder.mImage.disenable();
-            //设置每张图片大小
-            ViewGroup.LayoutParams para = mHolder.mImage.getLayoutParams();
-            para.width = (CommonUtils.getScreenWidth(viewGroup.getContext())-20)/3;//显示3列
-            para.height = para.width;
-            mHolder.mImage.setLayoutParams(para);
-            //设置图片点击事件
-            mHolder.mImage.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mOnItemClickListener.onPhotoItemClick(view, i, mImgList);
-                }
-            });
+            if (null!=mImgList) {
+                ImageLoaderUtils.displayImageUrl(mImgList.get(i), mHolder.mImage, null, null);
+                mHolder.mImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                mHolder.mImage.disenable();
+                //设置每张图片大小
+                ViewGroup.LayoutParams para = mHolder.mImage.getLayoutParams();
+                para.width = (CommonUtils.getScreenWidth(viewGroup.getContext()) - 20) / 3;//显示3列
+                para.height = para.width;
+                mHolder.mImage.setLayoutParams(para);
+                //设置图片点击事件
+                mHolder.mImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mOnItemClickListener.onPhotoItemClick(view, i, mImgList);
+                    }
+                });
+            }
             return convertView;
         }
 

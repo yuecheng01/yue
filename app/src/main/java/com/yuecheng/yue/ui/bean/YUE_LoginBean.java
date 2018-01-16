@@ -7,8 +7,13 @@ import java.io.Serializable;
  */
 
 public class YUE_LoginBean implements Serializable {
+    /**
+     * resuletcode : 1
+     * value : {"code":200,"userId":"15171391343","token":"PyCLnmR9KuwOcu/nt6E5RGB68LGf66RzIDHwehWtd08WiX5IqRJNVBRKbHmNzDV8HYvsOTFvX7MI9EgQ2jtHUg0ciF4bkNAl"}
+     */
+
     private int resuletcode;
-    private DataBean value;
+    private ValueBean value;
 
     public int getResuletcode() {
         return resuletcode;
@@ -18,16 +23,22 @@ public class YUE_LoginBean implements Serializable {
         this.resuletcode = resuletcode;
     }
 
-    public DataBean getValue() {
+    public ValueBean getValue() {
         return value;
     }
 
-    public void setValue(DataBean value) {
+    public void setValue(ValueBean value) {
         this.value = value;
     }
 
-    public class DataBean{
-        private int code ;
+    public static class ValueBean {
+        /**
+         * code : 200
+         * userId : 15171391343
+         * token : PyCLnmR9KuwOcu/nt6E5RGB68LGf66RzIDHwehWtd08WiX5IqRJNVBRKbHmNzDV8HYvsOTFvX7MI9EgQ2jtHUg0ciF4bkNAl
+         */
+
+        private int code;
         private String userId;
         private String token;
 

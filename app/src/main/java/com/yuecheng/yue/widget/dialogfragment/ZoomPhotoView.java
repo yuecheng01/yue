@@ -16,9 +16,11 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.yuecheng.yue.R;
+import com.yuecheng.yue.ui.bean.PhotoInfo;
 import com.yuecheng.yue.widget.photoview.Info;
 import com.yuecheng.yue.widget.photoview.PhotoView;
 
@@ -70,7 +72,7 @@ public class ZoomPhotoView extends DialogFragment implements ViewPager.OnPageCha
     private ZoomPhotoView() {
 
     }
-
+    ProgressBar progressBar;
     //      重写DialogFragment的onCreateView方法
     @Nullable
     @Override
@@ -89,11 +91,17 @@ public class ZoomPhotoView extends DialogFragment implements ViewPager.OnPageCha
         param.gravity = Gravity.CENTER | Gravity.BOTTOM;
         param.setMargins(50, 50, 50, 50);
         tvIndia.setLayoutParams(param);
-
+        //图片加载进度条
+        progressBar = new ProgressBar(this.getContext());
+        FrameLayout.LayoutParams loadingLayoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        loadingLayoutParams.gravity = Gravity.CENTER;
+        progressBar.setLayoutParams(loadingLayoutParams);
+        progressBar.setVisibility(View.GONE);
         //图片显示位置
         vpPhoto = new ViewPager(getContext());
         vpPhoto.setLayoutParams(params);
-        adapter = new PhotoAdapter(this, mList);
+        adapter = new PhotoAdapter(this, mList,progressBar);
         vpPhoto.setAdapter(adapter);
         vpPhoto.setCurrentItem(0, true);
         //设置ViewPager页面改变的监听器
@@ -102,6 +110,7 @@ public class ZoomPhotoView extends DialogFragment implements ViewPager.OnPageCha
         //加入flay布局
         flay.addView(vpPhoto);
         flay.addView(tvIndia);
+        flay.addView(progressBar);
         return flay;
     }
 
@@ -134,9 +143,13 @@ public class ZoomPhotoView extends DialogFragment implements ViewPager.OnPageCha
     }
 
     //    添加图片数据集合
-    public void addImages(List<String> images) {
+    public void addImages(List<PhotoInfo> images) {
         mList.clear();
-        mList.addAll(images);
+        for (PhotoInfo p :images
+             ) {
+            mList.add(p.url);
+        }
+//        mList.addAll(images);
     }
 
     //  初始化控件

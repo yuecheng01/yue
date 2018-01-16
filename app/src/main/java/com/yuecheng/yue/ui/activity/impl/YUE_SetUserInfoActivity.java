@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.yuecheng.yue.R;
-import com.yuecheng.yue.base.YUE_BaseActivity;
+import com.yuecheng.yue.base.YUE_BaseActivitySlideBack;
 import com.yuecheng.yue.ui.activity.YUE_ISetUserInfoView;
 import com.yuecheng.yue.ui.presenter.YUE_SetUserInfoViewPresenter;
 
@@ -16,7 +16,7 @@ import com.yuecheng.yue.ui.presenter.YUE_SetUserInfoViewPresenter;
  * Created by administraot on 2017/11/22.
  */
 
-public class YUE_SetUserInfoActivity extends YUE_BaseActivity implements YUE_ISetUserInfoView, View.OnClickListener{
+public class YUE_SetUserInfoActivity extends YUE_BaseActivitySlideBack implements YUE_ISetUserInfoView, View.OnClickListener{
     private LinearLayout mSetUserIcon;
     private LinearLayout mSetUserSex;
     private LinearLayout mSetUserDisplay;

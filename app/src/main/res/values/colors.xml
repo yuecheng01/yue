@@ -35,4 +35,18 @@
 
     <color name="btn_cancel_color">#999999</color>
     <color name="btn_confirm_color">#303F9F</color>
+    <color name="dialog_back">#8fD8BFD8</color>
+    <color name="color_232323">#232323</color>
+    <color name="name_selector_color">#cccccc</color>
+    <color name="praise_item_default">#333333</color>
+    <color name="praise_item_selector_default">#cccccc</color>
+    <color name="color_8290AF">#8290AF</color>
+
+    <color name="default_clickable_color">#cccccc</color>
+    <color name="im_font_color_text_hint">#abb1b6</color>
+
+    <color name="praise_item">#8290AF</color>
+    <color name="im_line_color">#dadada</color>
+    <color name="im_social_dig_name_bg">#DDDDDD</color>
+    <color name="color_aeaeae">#aeaeae</color>
 </resources>

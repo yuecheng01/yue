@@ -34,7 +34,7 @@ public class YUE_HomeViewInteractorImpl implements YUE_IHomeViewInteractor {
         for(int i=0;i<8;i++)
         {
             map = new HashMap<String, Object>();
-            map.put("img", R.mipmap.haha);
+            map.put("img", R.drawable.haha);
             map.put("title", "item"+i);
             data.add(map);
         }

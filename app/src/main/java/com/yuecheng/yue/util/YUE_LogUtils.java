@@ -20,13 +20,13 @@ public class YUE_LogUtils {
 
     public static void v(String tag, Object msg) {
         if (v > TAG) {
-            Log.i(tag, "" + msg);
+            Log.v(tag, "" + msg);
         }
     }
 
     public static void d(String tag, Object msg) {
         if (d > TAG) {
-            Log.i(tag, "" + msg);
+            Log.d(tag, "" + msg);
         }
     }
 
@@ -38,19 +38,19 @@ public class YUE_LogUtils {
 
     public static void w(String tag, Object msg) {
         if (w > TAG) {
-            Log.i(tag, "" + msg);
+            Log.w(tag, "" + msg);
         }
     }
 
     public static void e(String tag, Object msg) {
         if (e > TAG) {
-            Log.i(tag, "" + msg);
+            Log.e(tag, "" + msg);
         }
     }
 
     public static void simpleLog(Object msg) {
         if (e > TAG) {
-            Log.i("TestLog", "" + msg);
+            Log.e("TestLog", "" + msg);
         }
     }
 }

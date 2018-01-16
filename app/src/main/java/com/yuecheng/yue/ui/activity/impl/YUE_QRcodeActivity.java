@@ -19,7 +19,7 @@ import android.widget.Toast;
 import com.uuzuche.lib_zxing.activity.CaptureFragment;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 import com.yuecheng.yue.R;
-import com.yuecheng.yue.base.YUE_BaseActivity;
+import com.yuecheng.yue.base.YUE_BaseActivitySlideBack;
 
 import java.util.List;
 
@@ -27,7 +27,7 @@ import java.util.List;
  * Created by administraot on 2017/12/4.
  */
 
-public class YUE_QRcodeActivity extends YUE_BaseActivity implements View.OnClickListener{
+public class YUE_QRcodeActivity extends YUE_BaseActivitySlideBack implements View.OnClickListener{
 
 private ImageView mLight;
 private TextView mScanLocaPic;

@@ -51,4 +51,11 @@
     <string name="friend_circle">朋友圈</string>
     <string name="yuecheng">悦城</string>
     <string name="scanlocalpic">扫描本地图片</string>
+    <string name="getcode">获取验证码</string>
+    <string name="next_step">下一步</string>
+    <string name="writecode">填入验证码</string>
+    <string name="set_newpassword">设置新的密码</string>
+    <string name="register_protocol">点击下一步即表示同意《yue服务协议》</string>
+    <string name="set_password">设置密码</string>
+    <string name="corfim_password">确认密码</string>
 </resources>

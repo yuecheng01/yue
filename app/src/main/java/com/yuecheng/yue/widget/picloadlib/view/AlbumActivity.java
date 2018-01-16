@@ -27,6 +27,7 @@ import com.yuecheng.yue.R;
 import com.yuecheng.yue.ui.bean.YUE_SPsave;
 import com.yuecheng.yue.util.CommonUtils;
 import com.yuecheng.yue.util.YUE_SharedPreferencesUtils;
+import com.yuecheng.yue.util.YUE_ToastUtils;
 import com.yuecheng.yue.widget.picloadlib.PhotoPickActivity;
 import com.yuecheng.yue.widget.picloadlib.adapter.AlbumGridViewAdapter;
 import com.yuecheng.yue.widget.picloadlib.util.AlbumHelper;
@@ -141,8 +142,8 @@ public class AlbumActivity extends AppCompatActivity implements View.OnClickList
                             toggleButton.setChecked(false);
                             chooseBt.setVisibility(View.GONE);
                             if (!removeOneData(mDataList.get(position))) {
-                                Toast.makeText(AlbumActivity.this, "超出可选图片张数",
-                                        Toast.LENGTH_SHORT).show();
+                                YUE_ToastUtils.getInstance(AlbumActivity.this).showmessage
+                                        ("超出可选图片张数");
                             }
                             return;
                         }

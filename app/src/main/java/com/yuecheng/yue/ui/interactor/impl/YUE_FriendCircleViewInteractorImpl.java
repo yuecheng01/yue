@@ -21,42 +21,7 @@ public class YUE_FriendCircleViewInteractorImpl implements YUE_IFriendCircleView
         YUE_CircleMomentsBean y = new YUE_CircleMomentsBean();
         List<String> imgs = new ArrayList<String>() {
             {
-                add("https://timgsa.baidu" +
-                        ".com/timg?image&quality=80&size=b9999_10000&sec=1511967009516&di" +
-                        "=77e1047e5b3aba8bae43d1f5dcc1f56f&imgtype=0&src=http%3A%2F%2Ff7.topitme" +
-                        ".com%2F7%2F1c%2F88%2F11258911656e6881c7o.jpg");
-                add("https://timgsa.baidu" +
-                        ".com/timg?image&quality=80&size=b9999_10000&sec=1511967009513&di" +
-                        "=1c4512b85a20ec91e6b6e590fd173776&imgtype=0&src=http%3A%2F%2Fuploads" +
-                        ".xuexila.com%2Fallimg%2F1506%2F633-150629202618.jpg");
-                add("https://timgsa.baidu" +
-                        ".com/timg?image&quality=80&size=b9999_10000&sec=1511967009451&di" +
-                        "=511db6418ab580c88eee18a37c305b49&imgtype=0&src=http%3A%2F%2Fimg1.3lian" +
-                        ".com%2F2015%2Fa1%2F46%2Fd%2F74.jpg");
-                add("https://timgsa.baidu" +
-                        ".com/timg?image&quality=80&size=b9999_10000&sec=1511967009445&di" +
-                        "=7b98893ec4d03853e70b634f037df62a&imgtype=0&src=http%3A%2F" +
-                        "%2Fimg4.xiazaizhijia.com%2Fwalls%2F20151019%2F1440x900_83419613f167bca" +
-                        ".jpg");
-                add("https://timgsa.baidu" +
-                        ".com/timg?image&quality=80&size=b9999_10000&sec=1511967337010&di" +
-                        "=6a9f253cd27ee46144ebe2df68a8acb6&imgtype=0&src=http%3A%2F%2Fscimg" +
-                        ".jb51.net%2Fallimg%2F150713%2F14-150G31G222950.jpg");
-                add("https://timgsa.baidu" +
-                        ".com/timg?image&quality=80&size=b9999_10000&sec=1511967417818&di" +
-                        "=cef949c3ba20374d435beacb625109bd&imgtype=0&src=http%3A%2F%2Fimgsrc" +
-                        ".baidu" +
-                        ".com%2Fimgad%2Fpic%2Fitem%2Fe850352ac65c10387071c8f8b9119313b07e89f8.jpg");
-                add("https://timgsa.baidu" +
-                        ".com/timg?image&quality=80&size=b9999_10000&sec=1512482772508&di" +
-                        "=e4e8c2bd25ebc38019e56ffc8988b669&imgtype=0&src=http%3A%2F%2Fimgsrc" +
-                        ".baidu" +
-                        ".com%2Fimgad%2Fpic%2Fitem%2F10dfa9ec8a136327d62e9b099a8fa0ec09fac7cd.jpg");
-                add("https://timgsa.baidu" +
-                        ".com/timg?image&quality=80&size=b9999_10000&sec=1512482772506&di" +
-                        "=27872b73bf6100872f0ffd3475567e30&imgtype=0&src=http%3A%2F%2Fimgsrc" +
-                        ".baidu" +
-                        ".com%2Fimgad%2Fpic%2Fitem%2F5ab5c9ea15ce36d32ae0f90a31f33a87e950b120.jpg");
+                add("http://lly.jingomall.com.cn/upload/goodsContent/2017-12/TB2IoRodnnI8KJjSszgXXc8ApXa_!!2178875332.jpg");
             }
         };
         y.setImgcontent(imgs);
@@ -64,10 +29,73 @@ public class YUE_FriendCircleViewInteractorImpl implements YUE_IFriendCircleView
         y.setTextcontent(YUE_AppUtils.getAppContext().getResources().getString(R.string.userheart));
         y.setUsericon("http://www.jingomall.cn/upload/sysconfigs/2017-06/59536b10569af.png");
 
+        YUE_CircleMomentsBean y2 = new YUE_CircleMomentsBean();
+        List<String> imgs2 = new ArrayList<String>() {
+            {
+                add("http://lly.jingomall.com.cn/upload/goodsContent/2017-12/TB2IoRodnnI8KJjSszgXXc8ApXa_!!2178875332.jpg");
+                add("http://lly.jingomall.com.cn/upload/goodsContent/2017-12/TB2t6VmddbJ8KJjy1zjXXaqapXa_!!2178875332.jpg");
+            }
+        };
+        y2.setImgcontent(imgs2);
+        y2.setNickname("悦城");
+        y2.setTextcontent(YUE_AppUtils.getAppContext().getResources().getString(R.string
+                .userheart));
+        y2.setUsericon("http://www.jingomall.cn/upload/sysconfigs/2017-06/59536b10569af.png");
+
+        YUE_CircleMomentsBean y3 = new YUE_CircleMomentsBean();
+        List<String> imgs3 = new ArrayList<String>() {
+            {
+                add("http://lly.jingomall.com.cn/upload/goodsContent/2017-12/TB2IoRodnnI8KJjSszgXXc8ApXa_!!2178875332.jpg");
+                add("http://lly.jingomall.com.cn/upload/goodsContent/2017-12/TB2t6VmddbJ8KJjy1zjXXaqapXa_!!2178875332.jpg");
+                add("http://lly.jingomall.com.cn/upload/goodsContent/2017-12/TB2rrVxdcnI8KJjSsziXXb8QpXa_!!2178875332.jpg");
+            }
+        };
+        y3.setImgcontent(imgs3);
+        y3.setNickname("悦城");
+        y3.setTextcontent(YUE_AppUtils.getAppContext().getResources().getString(R.string
+                .userheart));
+        y3.setUsericon("http://www.jingomall.cn/upload/sysconfigs/2017-06/59536b10569af.png");
+
+        YUE_CircleMomentsBean y4 = new YUE_CircleMomentsBean();
+        List<String> imgs4 = new ArrayList<String>() {
+            {
+                add("http://lly.jingomall.com.cn/upload/goodsContent/2017-12/TB2IoRodnnI8KJjSszgXXc8ApXa_!!2178875332.jpg");
+                add("http://lly.jingomall.com.cn/upload/goodsContent/2017-12/TB2t6VmddbJ8KJjy1zjXXaqapXa_!!2178875332.jpg");
+                add("http://lly.jingomall.com.cn/upload/goodsContent/2017-12/TB2rrVxdcnI8KJjSsziXXb8QpXa_!!2178875332.jpg");
+                add("http://lly.jingomall.com.cn/upload/goodsContent/2017-12/TB2rh4mdnTI8KJjSsphXXcFppXa_!!2178875332.jpg");
+            }
+        };
+        y4.setImgcontent(imgs4);
+        y4.setNickname("悦城");
+        y4.setTextcontent(YUE_AppUtils.getAppContext().getResources().getString(R.string
+                .userheart));
+        y4.setUsericon("http://www.jingomall.cn/upload/sysconfigs/2017-06/59536b10569af.png");
+
+        YUE_CircleMomentsBean y5 = new YUE_CircleMomentsBean();
+        List<String> imgs5 = new ArrayList<String>() {
+            {
+                add("http://lly.jingomall.com.cn/upload/goodsContent/2017-12/TB2IoRodnnI8KJjSszgXXc8ApXa_!!2178875332.jpg");
+                add("http://lly.jingomall.com.cn/upload/goodsContent/2017-12/TB2t6VmddbJ8KJjy1zjXXaqapXa_!!2178875332.jpg");
+                add("http://lly.jingomall.com.cn/upload/goodsContent/2017-12/TB2rrVxdcnI8KJjSsziXXb8QpXa_!!2178875332.jpg");
+                add("http://lly.jingomall.com.cn/upload/goodsContent/2017-12/TB2rh4mdnTI8KJjSsphXXcFppXa_!!2178875332.jpg");
+                add("http://lly.jingomall.com.cn/upload/goodsContent/2017-12/TB2z8pqdh6I8KJjSszfXXaZVXXa_!!2178875332.jpg");
+                add("http://lly.jingomall.com.cn/upload/goodsContent/2017-12/TB2lWpLdb_I8KJjy1XaXXbsxpXa_!!2178875332.jpg");
+                add("http://lly.jingomall.com.cn/upload/goodsContent/2017-12/TB2g5ljdlDH8KJjSszcXXbDTFXa_!!2178875332.jpg");
+                add("http://lly.jingomall.com.cn/upload/goodsContent/2017-12/TB2p.NodnnI8KJjSszgXXc8ApXa_!!2178875332.jpg");
+                add("http://lly.jingomall.com.cn/upload/goodsContent/2017-12/TB2SVlLdf6H8KJjSspmXXb2WXXa_!!2178875332.jpg");
+            }
+        };
+        y5.setImgcontent(imgs5);
+        y5.setNickname("悦城");
+        y5.setTextcontent(YUE_AppUtils.getAppContext().getResources().getString(R.string
+                .userheart));
+        y5.setUsericon("http://www.jingomall.cn/upload/sysconfigs/2017-06/59536b10569af.png");
+
         list.add(y);
-        list.add(y);
-        list.add(y);
-        list.add(y);
+        list.add(y2);
+        list.add(y3);
+        list.add(y4);
+        list.add(y5);
         return list;
     }
 }

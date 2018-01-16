@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import com.yuecheng.yue.R;
-import com.yuecheng.yue.base.YUE_BaseActivity;
+import com.yuecheng.yue.base.YUE_BaseActivitySlideBack;
 import com.yuecheng.yue.base.YUE_BaseAppManager;
 import com.yuecheng.yue.ui.activity.YUE_ISettingsView;
 import com.yuecheng.yue.ui.presenter.YUE_SettingsViewPresenter;
@@ -17,7 +17,7 @@ import com.yuecheng.yue.widget.selector.YUE_BackResUtils;
  * Created by yuecheng on 2017/11/6.
  */
 
-public class YUE_SettingsActivity extends YUE_BaseActivity implements View.OnClickListener,
+public class YUE_SettingsActivity extends YUE_BaseActivitySlideBack implements View.OnClickListener,
         YUE_ISettingsView {
     private YUE_SettingsViewPresenter mPresenter;
     private LinearLayout mSetUserInfo;

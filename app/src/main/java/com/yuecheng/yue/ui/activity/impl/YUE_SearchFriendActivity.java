@@ -12,7 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import com.yuecheng.yue.R;
-import com.yuecheng.yue.base.YUE_BaseActivity;
+import com.yuecheng.yue.base.YUE_BaseActivitySlideBack;
 import com.yuecheng.yue.ui.activity.YUE_ISearchFriendView;
 import com.yuecheng.yue.ui.adapter.YUE_PhoneContractAdapter;
 import com.yuecheng.yue.ui.presenter.YUE_SearchFriendViewPresenter;
@@ -23,7 +23,7 @@ import com.yuecheng.yue.widget.selector.YUE_BackResUtils;
  * Created by yuecheng on 2017/11/8.
  */
 
-public class YUE_SearchFriendActivity extends YUE_BaseActivity implements YUE_ISearchFriendView {
+public class YUE_SearchFriendActivity extends YUE_BaseActivitySlideBack implements YUE_ISearchFriendView {
     private SearchView mSearchView;
     private RecyclerView mRecyclerView;
     private YUE_SearchFriendViewPresenter mPresenter;

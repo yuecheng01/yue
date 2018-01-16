@@ -40,6 +40,8 @@ import com.yuecheng.yue.widget.picloadlib.util.PublicWay;
 import com.yuecheng.yue.widget.picloadlib.view.AlbumActivity;
 import com.yuecheng.yue.widget.picloadlib.view.GalleryActivity;
 
+import java.util.ArrayList;
+
 
 public class PhotoPickActivity extends AppCompatActivity {
     private GridView mGv;
@@ -49,9 +51,9 @@ public class PhotoPickActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mBitmap = BitmapFactory.decodeResource(
-                getResources(),
-                R.drawable.icon_addpic_unfocused);
+//        mBitmap = BitmapFactory.decodeResource(
+//                getResources(),
+//                R.drawable.icon_addpic_unfocused);
         PublicWay.activityList.add(this);
 //   此部分主要是适配我的主题切换，这个库我没有集成项目的baseactivity，所以此处重复添加此代码了。
         String mThem = (String) YUE_SharedPreferencesUtils.getParam(this, YUE_SPsave.YUE_THEM,
@@ -73,7 +75,7 @@ public class PhotoPickActivity extends AppCompatActivity {
                 break;
             default:
                 if (android.os.Build.VERSION.SDK_INT >= 21)
-                    window.setStatusBarColor(CommonUtils.getColorByAttrId(PhotoPickActivity.this,R.attr.colorPrimary));
+                    window.setStatusBarColor(CommonUtils.getColorByAttrId(PhotoPickActivity.this, R.attr.colorPrimary));
                 break;
         }
 //   此部分主要是适配我的主题切换，这个库我没有集成项目的baseactivity，所以此处重复添加此代码了。
@@ -84,18 +86,13 @@ public class PhotoPickActivity extends AppCompatActivity {
     }
 
     private void initDataEvents() {
-        mGv.setSelector(new ColorDrawable(Color.TRANSPARENT));
-    }
-
-    private void initViews() {
-        mGv = (GridView) findViewById(R.id.noScrollgridview);
         mAdapter = new GridAdapter(this);
-        mAdapter.update();
         mGv.setAdapter(mAdapter);
+        mAdapter.update();
         mGv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+                Log.e("length-->",Bimp.tempSelectBitmap.size()+"");
                 if (i == Bimp.tempSelectBitmap.size()) {
                     actionSheetDialogNoTitle();
                 } else {
@@ -107,6 +104,11 @@ public class PhotoPickActivity extends AppCompatActivity {
                 }
             }
         });
+        mGv.setSelector(new ColorDrawable(Color.TRANSPARENT));
+    }
+
+    private void initViews() {
+        mGv = (GridView) findViewById(R.id.noScrollgridview);
     }
 
     //    弹出框
@@ -114,7 +116,7 @@ public class PhotoPickActivity extends AppCompatActivity {
         final String[] stringItems = {"图库", "相机"};
         final ActionSheetDialog dialog = new ActionSheetDialog(PhotoPickActivity.this, stringItems, null);
         dialog.isTitleShow(false)
-                .cancelText(CommonUtils.getColorByAttrId(PhotoPickActivity.this,R.attr.colorPrimary))
+                .cancelText(CommonUtils.getColorByAttrId(PhotoPickActivity.this, R.attr.colorPrimary))
                 .itemTextColor(CommonUtils.getColorByAttrId(PhotoPickActivity.this, R.attr.colorPrimary))
                 .show();
 
@@ -153,6 +155,12 @@ public class PhotoPickActivity extends AppCompatActivity {
         ab.setTitle("选择图片");
         mToolBar.setTitleTextColor(getResources().getColor(R.color.white));
         mToolBar.setOnMenuItemClickListener(onMenuItemClick);
+        mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clearActivitysAndSomeData();
+            }
+        });
     }
 
     Toolbar.OnMenuItemClickListener onMenuItemClick = new Toolbar.OnMenuItemClickListener() {
@@ -200,6 +208,7 @@ public class PhotoPickActivity extends AppCompatActivity {
         private int selectedPosition = -1;
         private boolean shape;
         private Context mContext;
+        private ArrayList<ImageItem> mListItems = new ArrayList<>();
 
         public boolean isShape() {
             return shape;
@@ -219,6 +228,7 @@ public class PhotoPickActivity extends AppCompatActivity {
         }
 
         public int getCount() {
+            Log.e("length-->",Bimp.tempSelectBitmap.size()+"");
             if (null != Bimp.tempSelectBitmap && Bimp.tempSelectBitmap.size() == PublicWay.num) {
                 return PublicWay.num;
             }
@@ -286,7 +296,7 @@ public class PhotoPickActivity extends AppCompatActivity {
             new Thread(new Runnable() {
                 public void run() {
                     while (true) {
-                        if (Bimp.max == Bimp.tempSelectBitmap.size()) {
+                      if (Bimp.max == Bimp.tempSelectBitmap.size()) {
                             Message message = new Message();
                             message.what = 1;
                             handler.sendMessage(message);
@@ -304,18 +314,28 @@ public class PhotoPickActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            Log.e("----------", String.valueOf(PublicWay.activityList.size()));
-            for (int i = 0; i < PublicWay.activityList.size(); i++) {
-                if (null != PublicWay.activityList.get(i)) {
-                    PublicWay.activityList.get(i).finish();
-                }
-            }
-            PublicWay.activityList.clear();
-//            Bimp.tempSelectBitmap.clear();
+            clearActivitysAndSomeData();
         }
         return true;
+    }
+
+    private void clearActivitysAndSomeData() {
+        Log.e("----------", String.valueOf(PublicWay.activityList.size()));
+        for (int i = 0; i < PublicWay.activityList.size(); i++) {
+            if (null != PublicWay.activityList.get(i)) {
+                PublicWay.activityList.get(i).finish();
+            }
+        }
+        PublicWay.activityList.clear();
+//        if (null != Bimp.tempSelectBitmap)
+//            Bimp.tempSelectBitmap.clear();
     }
 
     @Override

@@ -1,22 +1,19 @@
 package com.yuecheng.yue.ui.activity.impl;
 
-import android.os.Handler;
 import android.os.SystemClock;
 import android.view.View;
 import android.widget.TextView;
 import com.yuecheng.yue.R;
-import com.yuecheng.yue.base.YUE_BaseActivity;
+import com.yuecheng.yue.base.YUE_BaseActivitySlideBack;
 import com.yuecheng.yue.util.YUE_AnimationUtil;
 import com.yuecheng.yue.util.YUE_AppUtils;
 import com.yuecheng.yue.util.YUE_ThreadUtils;
-
-import io.rong.imkit.RongIM;
 
 /**
  * Created by yuecheng on 2017/11/7.
  */
 
-public class YUE_SplashActivity extends YUE_BaseActivity {
+public class YUE_SplashActivity extends YUE_BaseActivitySlideBack {
     private TextView mYue;
     @Override
     protected void initViewsAndEvents() {

@@ -5,10 +5,9 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.Window;
@@ -16,7 +15,6 @@ import android.view.WindowManager;
 
 import com.yuecheng.yue.R;
 import com.yuecheng.yue.ui.bean.YUE_SPsave;
-import com.yuecheng.yue.util.ColorUtil;
 import com.yuecheng.yue.util.CommonUtils;
 import com.yuecheng.yue.util.StatusBarCompat;
 import com.yuecheng.yue.util.YUE_SharedPreferencesUtils;
@@ -27,7 +25,7 @@ import com.yuecheng.yue.util.YUE_ToastUtils;
  * Created by yuecheng on 2017/10/29.
  */
 
-public abstract class YUE_BaseActivity extends AppCompatActivity {
+public abstract class YUE_BaseActivitySlideBack extends SlideBackActivity {
     /**
      * Screen information
      */
@@ -73,6 +71,8 @@ public abstract class YUE_BaseActivity extends AppCompatActivity {
                     window.setStatusBarColor(CommonUtils.getColorByAttrId(mContext,R.attr.colorPrimary));
                 break;
         }
+//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN);
+//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         YUE_BaseAppManager.getInstance().addActivity(this);
         /*
         *获取屏幕尺寸
@@ -105,6 +105,17 @@ public abstract class YUE_BaseActivity extends AppCompatActivity {
         }
     }
 
+    protected void initToolBars(int toolBarId,String title){
+        Toolbar mToolBar = findView(toolBarId);
+        setSupportActionBar(mToolBar);
+        ActionBar ab = getSupportActionBar();
+
+        //使能app bar的导航功能
+        ab.setDisplayHomeAsUpEnabled(true);
+
+        ab.setTitle(title);
+        mToolBar.setTitleTextColor(getResources().getColor(R.color.white));
+    }
     /*
     *功能操作
     * */

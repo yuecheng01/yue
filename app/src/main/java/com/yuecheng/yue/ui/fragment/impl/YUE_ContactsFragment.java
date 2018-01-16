@@ -2,12 +2,15 @@ package com.yuecheng.yue.ui.fragment.impl;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.yuecheng.yue.R;
 import com.yuecheng.yue.base.YUE_BaseLazyFragment;
 import com.yuecheng.yue.http.pinyin.CharacterParser;
@@ -17,6 +20,7 @@ import com.yuecheng.yue.ui.adapter.YUE_FridendListAdapter;
 import com.yuecheng.yue.ui.bean.YUE_FriendsBean;
 import com.yuecheng.yue.ui.fragment.YUE_IContactsFragment;
 import com.yuecheng.yue.ui.presenter.YUE_ContactsFragmentPresenter;
+import com.yuecheng.yue.util.CommonUtils;
 import com.yuecheng.yue.widget.SideBar;
 import com.yuecheng.yue.widget.YUE_CircleImageView;
 
@@ -39,7 +43,8 @@ public class YUE_ContactsFragment extends YUE_BaseLazyFragment implements YUE_IC
     private TextView mUnreadTextView;
     private TextView mNameTextView;
     private YUE_FridendListAdapter mAdapter;
-    LayoutInflater mLayoutInflater;
+    private LayoutInflater mLayoutInflater;
+    private SwipeRefreshLayout mRefreshLayout;
     /**
      * 中部展示的字母提示
      */
@@ -65,7 +70,15 @@ public class YUE_ContactsFragment extends YUE_BaseLazyFragment implements YUE_IC
     }
 
     private void updateUI() {
-        mPresenter.getData();
+        mRefreshLayout.setOnRefreshListener(new RefreshListener());
+        mPresenter.getDataUpdateContact();
+    }
+
+    class RefreshListener implements SwipeRefreshLayout.OnRefreshListener {
+        @Override
+        public void onRefresh() {
+            mPresenter.pullDataFromSever();
+        }
     }
 
     private void initData() {
@@ -80,7 +93,29 @@ public class YUE_ContactsFragment extends YUE_BaseLazyFragment implements YUE_IC
         //实例化汉字转拼音类
         mCharacterParser = CharacterParser.getInstance();
         mPinyinComparator = PinyinComparator.getInstance();
+        mRefreshLayout.setProgressViewOffset(false, 0, 52);//52这个数值可以自定义,它表示loading布局在距离顶部多远的地方进行动画效果
+        mRefreshLayout.setColorSchemeColors(CommonUtils.getColorByAttrId(getActivity(), R.attr
+                .colorPrimary), getResources().getColor(R.color.material_green));
+        mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
 
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem,
+                                 int visibleItemCount, int totalItemCount) {
+                boolean enable = false;
+                if(mListView != null && mListView.getChildCount() > 0){
+                    // check if the first item of the list is visible
+                    boolean firstItemVisible = mListView.getFirstVisiblePosition() == 0;
+                    // check if the top of the first item is visible
+                    boolean topOfFirstItemVisible = mListView.getChildAt(0).getTop() == 0;
+                    // enabling or disabling the refresh layout
+                    enable = firstItemVisible && topOfFirstItemVisible;
+                }
+                mRefreshLayout.setEnabled(enable);
+            }});
     }
 
     private void initViews(View view) {
@@ -88,6 +123,7 @@ public class YUE_ContactsFragment extends YUE_BaseLazyFragment implements YUE_IC
         mNoFriends = (TextView) view.findViewById(R.id.show_no_friend);
         mDialogTextView = (TextView) view.findViewById(R.id.group_dialog);
         mSidBar = (SideBar) view.findViewById(R.id.sidrbar);
+        mRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
 
         mHeadView = mLayoutInflater.inflate(R.layout.item_contact_list_header, null);
         mUnreadTextView = (TextView) mHeadView.findViewById(R.id.tv_unread);
@@ -122,7 +158,6 @@ public class YUE_ContactsFragment extends YUE_BaseLazyFragment implements YUE_IC
     }
 
 
-
     @Override
     public void loadFriendsList(List<YUE_FriendsBean> list) {
         boolean isReloadList = false;
@@ -142,7 +177,7 @@ public class YUE_ContactsFragment extends YUE_BaseLazyFragment implements YUE_IC
         if (isReloadList) {
             mSidBar.setVisibility(View.VISIBLE);
             mAdapter.updateListView(mFriendList);
-        } else{
+        } else {
             mSidBar.setVisibility(View.VISIBLE);
             mAdapter = new YUE_FridendListAdapter(mActivity, mFriendList);
             mListView.setAdapter(mAdapter);
@@ -167,12 +202,14 @@ public class YUE_ContactsFragment extends YUE_BaseLazyFragment implements YUE_IC
             });
         }
     }
+
     private void startFriendDetailsPage(YUE_FriendsBean friend) {
         Intent intent = new Intent(getActivity(), YUE_UserDetailActivity.class);
 //        intent.putExtra("type", CLICK_CONTACT_FRAGMENT_FRIEND);
         intent.putExtra("friend", friend);
         startActivity(intent);
     }
+
     @Override
     public void setpersonalUI(String mId, String mCacheName) {
         mSelectableRoundedImageView.setImageDrawable(getResources().getDrawable(R.drawable.default_chatroom));
@@ -182,6 +219,11 @@ public class YUE_ContactsFragment extends YUE_BaseLazyFragment implements YUE_IC
     @Override
     public List<YUE_FriendsBean> getFriendList() {
         return mFriendList;
+    }
+
+    @Override
+    public void setRefreshCancle() {
+        mRefreshLayout.setRefreshing(false);
     }
 
 

@@ -19,7 +19,7 @@ public class YUE_AnimationUtil {
         TranslateAnimation mHiddenAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
                 Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_PARENT,
                 0.0f, Animation.RELATIVE_TO_PARENT, 1.0f);
-        mHiddenAction.setDuration(1000);
+        mHiddenAction.setDuration(300);
         return mHiddenAction;
     }
 
@@ -32,7 +32,7 @@ public class YUE_AnimationUtil {
         TranslateAnimation mHiddenAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
                 Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_PARENT,
                 1.0f, Animation.RELATIVE_TO_PARENT, 0.0f);
-        mHiddenAction.setDuration(1000);
+        mHiddenAction.setDuration(300);
         return mHiddenAction;
     }
 }

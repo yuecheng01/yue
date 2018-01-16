@@ -256,7 +256,7 @@ public class SealAppContext implements RongIM.ConversationListBehaviorListener,
             try {
                 String currentID = RongIM.getInstance().getCurrentUserId();
                 try {
-                    data = jsonToBean(groupNotificationMessage.getData());
+                    data = jsonToBean(groupNotificationMessage.getDataUpdateContact());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
