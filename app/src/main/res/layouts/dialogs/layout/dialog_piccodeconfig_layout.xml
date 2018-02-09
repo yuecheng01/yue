@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:padding="@dimen/dp4">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp4"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/colorPrimary"
+            android:textSize="@dimen/sp10"
+            android:text="点击图片刷新"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/code_img"
+                android:layout_width="0dp"
+                android:scaleType="fitXY"
+                android:layout_marginTop="@dimen/dp4"
+                android:layout_marginBottom="@dimen/dp2"
+                android:layout_height="wrap_content"
+                android:layout_weight="2" />
+
+            <EditText
+                android:id="@+id/code_et"
+                android:layout_width="0dp"
+                android:hint="请输入验证码"
+                android:textSize="@dimen/sp12"
+                android:maxLines="1"
+                android:maxLength="4"
+                android:inputType="number"
+                android:digits="@string/filter_vcode"
+                android:textCursorDrawable="@drawable/color_cursor"
+                android:textColorHint="@color/name_selector_color"
+                android:layout_height="@dimen/dp48"
+                android:layout_weight="3" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/f0f0f0" />
+
+        <TextView
+            android:id="@+id/code_confir"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp48"
+            android:textColor="?attr/colorPrimary"
+            android:text="@string/infr"
+            android:layout_gravity="center_horizontal" />
+    </LinearLayout>
+</android.support.v7.widget.CardView>
