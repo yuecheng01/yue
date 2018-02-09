@@ -101,7 +101,7 @@ public class YUE_CommentActivity extends YUE_BaseActivitySlideBack implements YU
                 if (!TextUtils.isEmpty(mCommentWrite.getText())){
 
                 }else {
-                    YUE_ToastUtils.getInstance(this).showmessage("什么都没说呢。。。,,ԾㅂԾ,,");
+                    YUE_ToastUtils.showmessage("什么都没说呢。。。,,ԾㅂԾ,,");
                     ViewAnimationUtils.shake(mBtnSend,false);
                 }
                 break;

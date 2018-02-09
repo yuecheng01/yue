@@ -31,7 +31,8 @@ public class YUE_UserDetailActivity extends YUE_BaseActivitySlideBack implements
     private Button mBtnYuYin;
     private Button mBtnShiPin;
 
-    private YUE_FriendsBean mFriend;
+    private String  mUserPhone;
+    private String  mUserNickName;
     private final String TAG = this.getClass().getSimpleName();
 
     @Override
@@ -56,14 +57,14 @@ public class YUE_UserDetailActivity extends YUE_BaseActivitySlideBack implements
         //使能app bar的导航功能
         ab.setDisplayHomeAsUpEnabled(true);
 
-        ab.setTitle(mFriend.getPhonenum().toString().trim());
+        ab.setTitle(mUserPhone);
         mToolBar.setTitleTextColor(getResources().getColor(R.color.white));
     }
 
 
     private void initDataEvents() {
-        mFriend = (YUE_FriendsBean) getIntent().getSerializableExtra("friend");
-
+        mUserPhone = getIntent().getStringExtra("userId");
+        mUserNickName = getIntent().getStringExtra("userNickName");
         mBtnChat.setOnClickListener(this);
         mBtnYuYin.setOnClickListener(this);
         mBtnShiPin.setOnClickListener(this);
@@ -82,16 +83,12 @@ public class YUE_UserDetailActivity extends YUE_BaseActivitySlideBack implements
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.personal_chat:
-                String phoneNum = mFriend.getPhonenum();
-                String displayName = mFriend.getDisplayname();
-                String nickName = mFriend.getNickname();
-                YUE_LogUtils.i(TAG,phoneNum+"----"+displayName+"----"+nickName);
-                if (!TextUtils.isEmpty(displayName)) {
-                    RongIM.getInstance().startPrivateChat(YUE_UserDetailActivity.this,phoneNum ,
-                            displayName);
+                if (!TextUtils.isEmpty(mUserPhone)) {
+                    RongIM.getInstance().startPrivateChat(YUE_UserDetailActivity.this,mUserPhone ,
+                            mUserNickName);
                 } else {
-                    RongIM.getInstance().startPrivateChat(YUE_UserDetailActivity.this, phoneNum,
-                            nickName);
+                    RongIM.getInstance().startPrivateChat(YUE_UserDetailActivity.this, mUserPhone,
+                            mUserNickName);
                 }
                 finish();
                 break;

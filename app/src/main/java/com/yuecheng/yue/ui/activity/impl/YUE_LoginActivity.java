@@ -88,10 +88,10 @@ public class YUE_LoginActivity extends YUE_BaseActivityNoSlideBack implements YU
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.login:
+            case R.id.login://登录
                 mPresenter.login();
                 break;
-            case R.id.register:
+            case R.id.register://注册
                 mPresenter.register();
                 break;
         }
@@ -165,5 +165,6 @@ public class YUE_LoginActivity extends YUE_BaseActivityNoSlideBack implements YU
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mYUE_CustomVideoView.stopPlayback();
     }
 }

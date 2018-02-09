@@ -17,5 +17,4 @@ public interface YUE_IHomeViewInteractor {
 
     List<Fragment> gerFragmentsList();
 
-    String getToken();
 }

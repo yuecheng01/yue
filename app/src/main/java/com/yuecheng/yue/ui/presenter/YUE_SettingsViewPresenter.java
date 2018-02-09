@@ -10,18 +10,20 @@ import com.yuecheng.yue.ui.interactor.impl.YUE_SettingsViewInteractorImpl;
 import com.yuecheng.yue.util.YUE_AppUtils;
 import com.yuecheng.yue.util.YUE_SharedPreferencesUtils;
 
+import io.rong.imkit.RongIM;
+
 /**
  * Created by yuecheng on 2017/11/6.
  */
 
 public class YUE_SettingsViewPresenter {
     private Context mContext;
-    private YUE_ISettingsView mSettingsView;
+    private YUE_ISettingsView mView;
     private YUE_ISettingsViewInteractor mInteractor;
 
     public YUE_SettingsViewPresenter(Context context, YUE_ISettingsView a) {
         this.mContext = context;
-        this.mSettingsView = a;
+        this.mView = a;
         mInteractor = new YUE_SettingsViewInteractorImpl();
     }
 
@@ -39,9 +41,14 @@ public class YUE_SettingsViewPresenter {
                        YUE_SPsave.YUE_LOGING_PASSWORD,
                        "");
                break;
+           default:
+               RongIM.getInstance().logout();
+               YUE_SharedPreferencesUtils.setParam(YUE_AppUtils.getAppContext(),YUE_SPsave
+                       .YUE_TOKEN,"");
+               break;
        }
 
-        mSettingsView.finishAllActivity();
-        mSettingsView.jump2Activity(YUE_LoginActivity.class);
+        mView.finishAllActivity();
+        mView.jump2Activity(YUE_LoginActivity.class);
     }
 }

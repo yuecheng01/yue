@@ -54,6 +54,7 @@ public class YUE_DampScrollView extends ScrollView {
         if (getChildCount() > 0) {
             contentView = getChildAt(0);
         }
+        super.onFinishInflate();
     }
 
     /**

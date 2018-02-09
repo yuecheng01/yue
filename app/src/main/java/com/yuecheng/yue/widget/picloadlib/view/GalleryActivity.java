@@ -283,4 +283,13 @@ public class GalleryActivity extends AppCompatActivity {
 
 
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        synchronized (PublicWay.activityList){
+            if (PublicWay.activityList.contains(this))
+                PublicWay.activityList.remove(this);
+        }
+    }
 }

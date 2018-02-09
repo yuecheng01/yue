@@ -1,5 +1,7 @@
 package com.yuecheng.yue.http;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.yuecheng.yue.util.NetWorkUtil;
 import com.yuecheng.yue.util.YUE_AppUtils;
@@ -71,10 +73,15 @@ public class ApiServicesManager {
             .connectTimeout(9, TimeUnit.SECONDS)
             .build();
 
-    public YUE_API yueapi;
-    private static final String mBaseUrl = "http://yuecheng.xicp.io:14475/";
+    private YUE_API yueapi;
+    //我的电脑服务器
+//    private String mBaseUrl = "http://yuecheng.xicp.io:14475/";
+    //公司电脑服务器
+    private String mBaseUrl = "http://192.168.3.130/";
     private Object mYueMonitor = new Object();
-
+    private Gson gson = new GsonBuilder()
+            .setLenient()
+            .create();
     public YUE_API getYueapi() {
         if (null == yueapi) {
             synchronized (mYueMonitor) {
@@ -83,7 +90,7 @@ public class ApiServicesManager {
                             .baseUrl(mBaseUrl)
                             .client(mClient)
                             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                            .addConverterFactory(GsonConverterFactory.create())
+                            .addConverterFactory(GsonConverterFactory.create(gson))
                             .build()
                             .create(YUE_API.class);
                 }

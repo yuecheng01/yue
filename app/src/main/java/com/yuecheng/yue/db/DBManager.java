@@ -14,7 +14,6 @@ public class DBManager {
     private DaoMaster mDaoMaster;
     private DaoSession mDaoSession;
     private static DBManager mInstance; //单例
-    private DaoMaster.DevOpenHelper mHelper;
 
     private DBManager() {
         if (mInstance == null) {
@@ -23,7 +22,6 @@ public class DBManager {
             //此处为自己需要处理的表
             mDaoMaster = new DaoMaster(devOpenHelper.getWritableDatabase());
             mDaoSession = mDaoMaster.newSession();
-            this.mHelper = devOpenHelper;
         }
     }
 
@@ -49,9 +47,6 @@ public class DBManager {
     public DaoSession getNewSession() {
         mDaoSession = mDaoMaster.newSession();
         return mDaoSession;
-    }
-    public DaoMaster.DevOpenHelper getHelper(){
-        return mHelper;
     }
 }
 

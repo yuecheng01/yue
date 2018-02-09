@@ -1,5 +1,6 @@
 package com.yuecheng.yue.ui.activity;
 
+import android.net.Uri;
 import android.view.View;
 
 /**
@@ -11,13 +12,15 @@ public interface YUE_ISetUserInfoView {
 
     View getWrappedView();
 
-    void setUserDesc(String s);
+    void setUserSign(String s);//设置签名
 
-    String getUserDesc();
+    String getUserSign();//获取签名
 
-    void setBirthday(String dateDesc);
+    void setBirthday(String dateDesc);//设置生日
 
-    void setAddressSelect(String addressSelect);
+    void setNowAddress(String addressSelect);//设置现居地址
 
-    void setHomeAddressSelect(String homeAdressSelect);
+    void setHomeTownAddress(String homeAdressSelect);//设置家乡地址
+
+    void setIcon(Uri uri);//设置头像
 }

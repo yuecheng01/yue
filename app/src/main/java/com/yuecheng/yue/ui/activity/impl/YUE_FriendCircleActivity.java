@@ -5,9 +5,8 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.PersistableBundle;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.DividerItemDecoration;
@@ -15,7 +14,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,18 +21,14 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.malinskiy.superrecyclerview.OnMoreListener;
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
 import com.yuecheng.yue.R;
 import com.yuecheng.yue.base.YUE_BaseActivitySlideBack;
 import com.yuecheng.yue.ui.activity.YUE_IFriendCircleView;
-import com.yuecheng.yue.ui.adapter.DivItemDecoration;
 import com.yuecheng.yue.ui.adapter.YUE_CircleAdapter;
 import com.yuecheng.yue.ui.bean.CircleItem;
 import com.yuecheng.yue.ui.bean.CommentConfig;
@@ -43,9 +37,11 @@ import com.yuecheng.yue.ui.bean.FavortItem;
 import com.yuecheng.yue.ui.presenter.YUE_FriendCircleViewPresenter;
 import com.yuecheng.yue.util.CommonUtils;
 import com.yuecheng.yue.util.YUE_LogUtils;
+import com.yuecheng.yue.util.YUE_SharedPreferencesUtils;
 import com.yuecheng.yue.util.YUE_ToastUtils;
 import com.yuecheng.yue.util.anim.ViewAnimationUtils;
-import com.yuecheng.yue.widget.EmojiEditText.EmojiEditextView;
+import com.yuecheng.yue.widget.EmojiEditText.fragment.EmotionMainFragment;
+import com.yuecheng.yue.widget.EmojiEditText.utils.DisplayUtils;
 import com.yuecheng.yue.widget.circle.CommentListView;
 import com.yuecheng.yue.widget.picloadlib.PhotoPickActivity;
 import com.yuecheng.yue.widget.selector.YUE_BackResUtils;
@@ -71,15 +67,16 @@ public class YUE_FriendCircleActivity extends YUE_BaseActivitySlideBack implemen
     private LinearLayoutManager layoutManager;
     private int selectCircleItemH;
     private int selectCommentItemOffset;
-    private EmojiEditextView mEmojiEditextView;
     private RelativeLayout bodyLayout;
     private int currentKeyboardH;
     private int screenHeight;
     private int editTextBodyHeight;
     private Toolbar mToolBar;
-
+    private EmotionMainFragment mEmojiEditextView;
     private YUE_CircleAdapter mAdapter;
-    private int mLastPosition = 0;
+    private View mView;
+    private static int mRememberPosition;
+    private int emotion_map_type;
 
     @Override
     protected int getContentViewLayoutID() {
@@ -104,6 +101,14 @@ public class YUE_FriendCircleActivity extends YUE_BaseActivitySlideBack implemen
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_publish, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    protected void onDestroy() {
+        YUE_LogUtils.d(TAG, "onDestroy" + mRememberPosition);
+        if (layoutManager != null)
+            mRememberPosition = layoutManager.findFirstVisibleItemPosition();
+        super.onDestroy();
     }
 
     /**
@@ -167,21 +172,53 @@ public class YUE_FriendCircleActivity extends YUE_BaseActivitySlideBack implemen
         mRecyclerView.setAdapter(mAdapter);
         //加载数据
         mPresenter.loadData(TYPE_PULLREFRESH);
-        mEmojiEditextView.addOnSendClickListener(new EmojiEditextView.OnSendClickListener() {
+
+        // 创建评论框
+        initEmotionMainFragment();
+        //添加监听
+        mEmojiEditextView.addOnSendClickListener(new EmotionMainFragment.onSendClickListener() {
             @Override
-            public void click() {
+            public void sendClick() {
                 //发布评论
-                String content = mEmojiEditextView.getTextValue().toString().trim();
+                String content = mEmojiEditextView.getTextValue().trim();
                 if (TextUtils.isEmpty(content)) {
-                    YUE_ToastUtils.getInstance((Activity) mContext).showmessage("什么都没说呢。。。,,ԾㅂԾ,,");
-                    ViewAnimationUtils.shake(mEmojiEditextView.getEditext(),true);
+                    YUE_ToastUtils.showmessage("什么都没说呢。。。,,ԾㅂԾ," +
+                            "," +
+                            "");
+                    ViewAnimationUtils.shake(mEmojiEditextView.getSendBtn(), true);
                     return;
                 }
                 mPresenter.addComment(content, commentConfig);
                 updateEditTextBodyVisible(View.GONE, null);
             }
         });
+        //获取表情map类型,主要用于后面将文本转换成表情显示
+//        emotion_map_type = mEmojiEditextView.getEmotionMapType();
+        //不便于获取,存sp
+//        YUE_SharedPreferencesUtils.setParam(mContext,"emotion_map_type",emotion_map_type);
+        if (mRememberPosition > 0)
+            layoutManager.scrollToPosition(mRememberPosition);
         setViewTreeObserver();
+    }
+
+    private void initEmotionMainFragment() {
+        //构建传递参数
+        Bundle bundle = new Bundle();
+        //绑定主内容编辑框
+        bundle.putBoolean(EmotionMainFragment.BIND_TO_EDITTEXT, true);
+        //隐藏控件
+        bundle.putBoolean(EmotionMainFragment.HIDE_BAR_EDITTEXT_AND_BTN, false);
+        //替换fragment
+        //创建修改实例
+        mEmojiEditextView = EmotionMainFragment.newInstance(EmotionMainFragment.class, bundle);
+        mEmojiEditextView.bindToContentView(mView);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        // Replace whatever is in thefragment_container view with this fragment,
+        // and add the transaction to the backstack
+        transaction.replace(R.id.fl_emotionview_main, mEmojiEditextView);
+        transaction.addToBackStack(null);
+        //提交修改
+        transaction.commit();
     }
 
     private void setViewTreeObserver() {
@@ -218,9 +255,9 @@ public class YUE_FriendCircleActivity extends YUE_BaseActivitySlideBack implemen
                 }
                 //偏移listview
                 if (layoutManager != null && commentConfig != null) {
-                    layoutManager.scrollToPositionWithOffset(commentConfig.circlePosition +
-                            mAdapter
-                                    .HEADVIEW_SIZE, getListviewOffset(commentConfig));
+//                    layoutManager.scrollToPositionWithOffset(commentConfig.circlePosition +
+//                            mAdapter.HEADVIEW_SIZE, 0);
+                    layoutManager.scrollToPositionWithOffset(commentConfig.circlePosition + mAdapter.HEADVIEW_SIZE, getListviewOffset(commentConfig));
                 }
             }
         });
@@ -233,7 +270,7 @@ public class YUE_FriendCircleActivity extends YUE_BaseActivitySlideBack implemen
         //这里如果你的listview上面还有其它占高度的控件，则需要减去该控件高度，listview的headview除外。
         //int listviewOffset = mScreenHeight - mSelectCircleItemH - mCurrentKeyboardH - mEditTextBodyHeight;
         int listviewOffset = screenHeight - selectCircleItemH - currentKeyboardH -
-                editTextBodyHeight - mToolBar.getHeight();
+                mToolBar.getHeight() - DisplayUtils.dp2px(mContext, 48);
         if (commentConfig.commentType == CommentConfig.Type.REPLY) {
             //回复评论的情况
             listviewOffset = listviewOffset + selectCommentItemOffset;
@@ -262,7 +299,7 @@ public class YUE_FriendCircleActivity extends YUE_BaseActivitySlideBack implemen
     private void initViews() {
         mRecyclerView = findView(R.id.recycler);
         edittextbody = (LinearLayout) findViewById(R.id.editTextBodyLl);
-        mEmojiEditextView = (EmojiEditextView)findView(R.id.emojiedit);
+        mView = findView(R.id.mview);
     }
 
     /**
@@ -310,8 +347,8 @@ public class YUE_FriendCircleActivity extends YUE_BaseActivitySlideBack implemen
                 //edittextbody.setVisibility(View.GONE);
                 updateEditTextBodyVisible(View.GONE, null);
                 return true;
-            }else {
-                startActivity(YUE_HomeActivity.class);
+            } else {
+                finish();
                 return true;
             }
         }
@@ -323,29 +360,18 @@ public class YUE_FriendCircleActivity extends YUE_BaseActivitySlideBack implemen
      */
     @Override
     public void onBackPressed() {
+        /**
+         * 判断是否拦截返回键操作
+         */
+        if (!mEmojiEditextView.isInterceptBackPress()) {
+            super.onBackPressed();
+        }
         super.onBackPressed();
     }
 
     @Override
     public FragmentManager getSupportFManager() {
         return getSupportFragmentManager();
-    }
-
-    @Override
-    public void jump2Activity(Class a) {
-        startActivity(a);
-        overridePendingTransition(R.anim.activity_translate_in, R.anim
-                .activity_translate_out);
-    }
-
-    /**
-     * 点赞
-     */
-    @Override
-    public void showZan() {
-        YUE_LogUtils.e("zan---->", "Liked it !");
-        CoordinatorLayout mCoordinatorLayout = findView(R.id.CoordinatorLayout);
-        showSnackBar(mCoordinatorLayout, "Liked it !");
     }
 
     @Override
@@ -397,8 +423,8 @@ public class YUE_FriendCircleActivity extends YUE_BaseActivitySlideBack implemen
         for (int i = 0; i < items.size(); i++) {
             if (commentItemId.equals(items.get(i).getId())) {
                 items.remove(i);
-                mAdapter.notifyDataSetChanged();
-                //circleAdapter.notifyItemChanged(circlePosition+1);
+//                mAdapter.notifyDataSetChanged();
+                mAdapter.notifyItemChanged(circlePosition+1,"fuck");
                 return;
             }
         }
@@ -413,14 +439,21 @@ public class YUE_FriendCircleActivity extends YUE_BaseActivitySlideBack implemen
         measureCircleItemHighAndCommentItemOffset(commentConfig);
 
         if (View.VISIBLE == visible) {
-            mEmojiEditextView.requestEditTextFocus();
-            mEmojiEditextView.gridViewGone();
-            //弹出键盘
-            CommonUtils.showSoftInput(mEmojiEditextView.getContext(), mEmojiEditextView);
-
+            mEmojiEditextView.setEditextFocusable(true);
+//            mEmojiEditextView.setEditextTextRequestFocus();
+            //如果是回复别人,则输入框显示提示 回复某人
+            if (commentConfig.commentType==CommentConfig.Type.REPLY&&commentConfig.replyUser
+                    .getName()!=null&&!commentConfig.replyUser.getName().equals(""))
+            mEmojiEditextView.setEditextHint("回复:"+commentConfig.replyUser.getName());
+            //如果是自己发起评论,则输入框显示 发布评论,
+            if (commentConfig.commentType==CommentConfig.Type.PUBLIC)
+                mEmojiEditextView.setEditextHint("发布评论:");
+            //如果表情框是弹出的话 则先关掉表情框,在弹出软键盘.否则直接弹出软键盘;
+            mEmojiEditextView.isShowEmojiCloseItThenShowSoftInput();
         } else if (View.GONE == visible) {
             //隐藏键盘
-            CommonUtils.hideSoftInput(mEmojiEditextView.getContext(), mEmojiEditextView);
+            mEmojiEditextView.setEditextText("");
+            CommonUtils.hideSoftInput(YUE_FriendCircleActivity.this,mEmojiEditextView.getEditext());
         }
     }
 
@@ -464,8 +497,8 @@ public class YUE_FriendCircleActivity extends YUE_BaseActivitySlideBack implemen
         if (addItem != null) {
             CircleItem item = (CircleItem) mAdapter.getDatas().get(circlePosition);
             item.getFavorters().add(addItem);
-            mAdapter.notifyDataSetChanged();
-            //circleAdapter.notifyItemChanged(circlePosition+1);
+//            mAdapter.notifyDataSetChanged();
+            mAdapter.notifyItemChanged(circlePosition+1,"fuck");
         }
     }
 
@@ -476,8 +509,8 @@ public class YUE_FriendCircleActivity extends YUE_BaseActivitySlideBack implemen
         for (int i = 0; i < items.size(); i++) {
             if (favortId.equals(items.get(i).getId())) {
                 items.remove(i);
-                mAdapter.notifyDataSetChanged();
-                //circleAdapter.notifyItemChanged(circlePosition+1);
+//                mAdapter.notifyDataSetChanged();
+                mAdapter.notifyItemChanged(circlePosition+1,"fuck");
                 return;
             }
         }
@@ -488,10 +521,10 @@ public class YUE_FriendCircleActivity extends YUE_BaseActivitySlideBack implemen
         if (addItem != null) {
             CircleItem item = (CircleItem) mAdapter.getDatas().get(circlePosition);
             item.getComments().add(addItem);
-            mAdapter.notifyDataSetChanged();
-            //circleAdapter.notifyItemChanged(circlePosition+1);
+//            mAdapter.notifyDataSetChanged();
+            mAdapter.notifyItemChanged(circlePosition+1,"fuck");
         }
         //清空评论文本
-        mEmojiEditextView.setTextValue("");
+        mEmojiEditextView.setEditextText("");
     }
 }

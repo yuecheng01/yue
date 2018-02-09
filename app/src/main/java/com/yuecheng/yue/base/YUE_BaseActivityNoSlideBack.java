@@ -13,8 +13,10 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.yuecheng.yue.R;
+import com.yuecheng.yue.broadcast.NetBroadcastReceiver;
 import com.yuecheng.yue.ui.bean.YUE_SPsave;
 import com.yuecheng.yue.util.CommonUtils;
 import com.yuecheng.yue.util.StatusBarCompat;
@@ -26,7 +28,7 @@ import com.yuecheng.yue.util.YUE_ToastUtils;
  * Created by yuecheng on 2017/10/29.
  */
 
-public abstract class YUE_BaseActivityNoSlideBack extends AppCompatActivity {
+public abstract class YUE_BaseActivityNoSlideBack extends AppCompatActivity implements NetBroadcastReceiver.NetEvevt {
     /**
      * Screen information
      */
@@ -39,6 +41,12 @@ public abstract class YUE_BaseActivityNoSlideBack extends AppCompatActivity {
      * context
      */
     protected Context mContext = null;
+
+    public static NetBroadcastReceiver.NetEvevt evevt;
+    /**
+     * 网络类型
+     */
+    private int mNetMobile;
 
     @SuppressWarnings("unchecked")
     public <T extends View> T findView(int id) {
@@ -69,7 +77,7 @@ public abstract class YUE_BaseActivityNoSlideBack extends AppCompatActivity {
                 break;
             default:
                 if (Build.VERSION.SDK_INT >= 21)
-                    window.setStatusBarColor(CommonUtils.getColorByAttrId(mContext,R.attr.colorPrimary));
+                    window.setStatusBarColor(CommonUtils.getColorByAttrId(mContext, R.attr.colorPrimary));
                 break;
         }
 //        getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN);
@@ -91,14 +99,33 @@ public abstract class YUE_BaseActivityNoSlideBack extends AppCompatActivity {
                     "resource Id");
         }
         if (statusBarCompat) {
-            StatusBarCompat.compat(this, CommonUtils.getColorByAttrId(mContext,R.attr.colorPrimary));
+            StatusBarCompat.compat(this, CommonUtils.getColorByAttrId(mContext, R.attr.colorPrimary));
             transparent19and20();
         }
-
+        evevt = this;
+        inspectNet();
         initViewsAndEvents();
 
     }
-    protected Toolbar initToolBars(int toolBarId,String title){
+
+    /**
+     * 网络变化之后的类型
+     */
+    @Override
+    public void onNetChange(int netMobile) {
+        // TODO Auto-generated method stub
+        if (netMobile == 0)
+        Toast.makeText(mContext, "网络断开了", Toast.LENGTH_SHORT).show();
+        this.mNetMobile = netMobile;
+        isNetConnect();
+    }
+
+    private boolean inspectNet() {
+        this.mNetMobile = CommonUtils.getNetworkType(mContext);
+        return isNetConnect();
+    }
+
+    protected Toolbar initToolBars(int toolBarId, String title) {
         Toolbar mToolBar = findView(toolBarId);
         setSupportActionBar(mToolBar);
         ActionBar ab = getSupportActionBar();
@@ -110,11 +137,29 @@ public abstract class YUE_BaseActivityNoSlideBack extends AppCompatActivity {
         mToolBar.setTitleTextColor(getResources().getColor(R.color.white));
         return mToolBar;
     }
+
     protected void transparent19and20() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
                 && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
+    }
+
+    /**
+     * 判断有无网络 。
+     *
+     * @return true 有网, false 没有网络.
+     */
+    public boolean isNetConnect() {
+        if (mNetMobile == 1) {
+            return true;
+        } else if (mNetMobile == 0) {
+            return true;
+        } else if (mNetMobile == -1) {
+            return false;
+
+        }
+        return false;
     }
 
     /*
@@ -135,7 +180,7 @@ public abstract class YUE_BaseActivityNoSlideBack extends AppCompatActivity {
     @Override
     public void finish() {
         super.finish();
-        YUE_BaseAppManager.getInstance().removeActivity(this);
+//        YUE_BaseAppManager.getInstance().removeActivity(this);
 //        overridePendingTransition(R.anim.right_in, R.anim.right_out);
     }
 
@@ -148,16 +193,17 @@ public abstract class YUE_BaseActivityNoSlideBack extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        YUE_BaseAppManager.getInstance().removeActivity(this);
     }
 
     protected void ShowMessage(String s) {
-        YUE_ToastUtils.getInstance(this).showmessage(s);
+        YUE_ToastUtils.showmessage(s);
     }
 
-    protected void showSnackBar(View v,String s){
-        Snackbar snackBar =Snackbar.make(v,s,Snackbar.LENGTH_SHORT);
+    protected void showSnackBar(View v, String s) {
+        Snackbar snackBar = Snackbar.make(v, s, Snackbar.LENGTH_SHORT);
         //设置SnackBar背景颜色
-        snackBar.getView().setBackgroundColor(CommonUtils.getColorByAttrId(mContext,R.attr.colorPrimary));
+        snackBar.getView().setBackgroundColor(CommonUtils.getColorByAttrId(mContext, R.attr.colorPrimary));
         //设置按钮文字颜色
         snackBar.setActionTextColor(Color.WHITE);
         snackBar.show();

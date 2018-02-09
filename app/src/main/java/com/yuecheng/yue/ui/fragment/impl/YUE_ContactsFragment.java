@@ -21,6 +21,7 @@ import com.yuecheng.yue.ui.bean.YUE_FriendsBean;
 import com.yuecheng.yue.ui.fragment.YUE_IContactsFragment;
 import com.yuecheng.yue.ui.presenter.YUE_ContactsFragmentPresenter;
 import com.yuecheng.yue.util.CommonUtils;
+import com.yuecheng.yue.widget.LoadDialog;
 import com.yuecheng.yue.widget.SideBar;
 import com.yuecheng.yue.widget.YUE_CircleImageView;
 
@@ -44,7 +45,6 @@ public class YUE_ContactsFragment extends YUE_BaseLazyFragment implements YUE_IC
     private TextView mNameTextView;
     private YUE_FridendListAdapter mAdapter;
     private LayoutInflater mLayoutInflater;
-    private SwipeRefreshLayout mRefreshLayout;
     /**
      * 中部展示的字母提示
      */
@@ -66,20 +66,9 @@ public class YUE_ContactsFragment extends YUE_BaseLazyFragment implements YUE_IC
         setContentView(view);
         initViews(view);
         initData();
-        updateUI();
-    }
-
-    private void updateUI() {
-        mRefreshLayout.setOnRefreshListener(new RefreshListener());
         mPresenter.getDataUpdateContact();
     }
 
-    class RefreshListener implements SwipeRefreshLayout.OnRefreshListener {
-        @Override
-        public void onRefresh() {
-            mPresenter.pullDataFromSever();
-        }
-    }
 
     private void initData() {
         mPresenter = new YUE_ContactsFragmentPresenter(mActivity, this);
@@ -93,29 +82,6 @@ public class YUE_ContactsFragment extends YUE_BaseLazyFragment implements YUE_IC
         //实例化汉字转拼音类
         mCharacterParser = CharacterParser.getInstance();
         mPinyinComparator = PinyinComparator.getInstance();
-        mRefreshLayout.setProgressViewOffset(false, 0, 52);//52这个数值可以自定义,它表示loading布局在距离顶部多远的地方进行动画效果
-        mRefreshLayout.setColorSchemeColors(CommonUtils.getColorByAttrId(getActivity(), R.attr
-                .colorPrimary), getResources().getColor(R.color.material_green));
-        mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
-
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-            }
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem,
-                                 int visibleItemCount, int totalItemCount) {
-                boolean enable = false;
-                if(mListView != null && mListView.getChildCount() > 0){
-                    // check if the first item of the list is visible
-                    boolean firstItemVisible = mListView.getFirstVisiblePosition() == 0;
-                    // check if the top of the first item is visible
-                    boolean topOfFirstItemVisible = mListView.getChildAt(0).getTop() == 0;
-                    // enabling or disabling the refresh layout
-                    enable = firstItemVisible && topOfFirstItemVisible;
-                }
-                mRefreshLayout.setEnabled(enable);
-            }});
     }
 
     private void initViews(View view) {
@@ -123,7 +89,6 @@ public class YUE_ContactsFragment extends YUE_BaseLazyFragment implements YUE_IC
         mNoFriends = (TextView) view.findViewById(R.id.show_no_friend);
         mDialogTextView = (TextView) view.findViewById(R.id.group_dialog);
         mSidBar = (SideBar) view.findViewById(R.id.sidrbar);
-        mRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
 
         mHeadView = mLayoutInflater.inflate(R.layout.item_contact_list_header, null);
         mUnreadTextView = (TextView) mHeadView.findViewById(R.id.tv_unread);
@@ -151,7 +116,7 @@ public class YUE_ContactsFragment extends YUE_BaseLazyFragment implements YUE_IC
                 //该字母首次出现的位置
                 int position = mAdapter.getPositionForSection(s.charAt(0));
                 if (position != -1) {
-                    mListView.setSelection(position);
+                    mListView.setSelection(position+1);
                 }
             }
         });
@@ -185,7 +150,8 @@ public class YUE_ContactsFragment extends YUE_BaseLazyFragment implements YUE_IC
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     if (mListView.getHeaderViewsCount() > 0) {
-                        startFriendDetailsPage(mFriendList.get(i - 1));
+                        startFriendDetailsPage(mFriendList.get(i - 1).getPhonenum(),mFriendList
+                                .get(i-1).getNickname());
                     } else {
 //                        startFriendDetailsPage(mFilteredFriendList.get(position));
                     }
@@ -203,10 +169,11 @@ public class YUE_ContactsFragment extends YUE_BaseLazyFragment implements YUE_IC
         }
     }
 
-    private void startFriendDetailsPage(YUE_FriendsBean friend) {
+    private void startFriendDetailsPage(String userId,String nickName) {
         Intent intent = new Intent(getActivity(), YUE_UserDetailActivity.class);
 //        intent.putExtra("type", CLICK_CONTACT_FRAGMENT_FRIEND);
-        intent.putExtra("friend", friend);
+        intent.putExtra("userId", userId);
+        intent.putExtra("nickName", nickName);
         startActivity(intent);
     }
 
@@ -222,8 +189,13 @@ public class YUE_ContactsFragment extends YUE_BaseLazyFragment implements YUE_IC
     }
 
     @Override
-    public void setRefreshCancle() {
-        mRefreshLayout.setRefreshing(false);
+    public void dismissLoadingDialog() {
+        LoadDialog.dismiss(getActivity());
+    }
+
+    @Override
+    public void showLoadingDialog() {
+        LoadDialog.show(getActivity());
     }
 
 

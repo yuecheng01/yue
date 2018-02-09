@@ -1,10 +1,10 @@
 [
     {
-        "merged": "D:\\myjob\\yue\\RedPacket\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xxhdpi-v4\\_bg_to_hongbao.png",
-        "source": "D:\\myjob\\yue\\RedPacket\\build\\intermediates\\bundles\\debug\\res\\drawable-xxhdpi-v4\\_bg_to_hongbao.png"
+        "merged": "E:\\myproject2017-12-22\\yue\\RedPacket\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xxhdpi-v4\\_bg_from_hongbao.png",
+        "source": "E:\\myproject2017-12-22\\yue\\RedPacket\\build\\intermediates\\bundles\\debug\\res\\drawable-xxhdpi-v4\\_bg_from_hongbao.png"
     },
     {
-        "merged": "D:\\myjob\\yue\\RedPacket\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xxhdpi-v4\\_bg_from_hongbao.png",
-        "source": "D:\\myjob\\yue\\RedPacket\\build\\intermediates\\bundles\\debug\\res\\drawable-xxhdpi-v4\\_bg_from_hongbao.png"
+        "merged": "E:\\myproject2017-12-22\\yue\\RedPacket\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xxhdpi-v4\\_bg_to_hongbao.png",
+        "source": "E:\\myproject2017-12-22\\yue\\RedPacket\\build\\intermediates\\bundles\\debug\\res\\drawable-xxhdpi-v4\\_bg_to_hongbao.png"
     }
 ]

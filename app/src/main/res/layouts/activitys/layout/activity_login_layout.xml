@@ -3,7 +3,9 @@
                 android:id="@+id/rl"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:clipChildren="false"
                 android:background="@drawable/loginbg2">
+    <!-- android:clipChildren="false" 溢出父控件-->
     <com.yuecheng.yue.widget.circle.YUE_CustomVideoView
         android:id="@+id/videoplayer"
         android:layout_gravity="center"

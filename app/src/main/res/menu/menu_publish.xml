@@ -5,7 +5,7 @@
     tools:context=".MainActivity">
 
     <item android:id="@+id/action_send"
-        android:title="发布"
+        android:title="send moments"
         android:icon="@drawable/ic_write"
         android:orderInCategory="90"
         app:showAsAction="ifRoom" />

@@ -18,6 +18,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    configurations.all { config ->
+        if (config.name.contains('UnitTest')) {
+            config.resolutionStrategy.eachDependency { details ->
+                if (details.requested.group == 'com.squareup.leakcanary' && details.requested.name == 'leakcanary-android') {
+                    details.useTarget(group: details.requested.group, name: 'leakcanary-android-no-op', version: details.requested.version)
+                }
+            }
+        }
+    }
+
   /*  dexOptions {
 
         jumboMode true
@@ -69,7 +79,7 @@ dependencies {
     //    compile 'com.alibaba:fastjson:1.2.39'
     //    compile 'com.github.bumptech.glide:glide:4.2.0'
     compile project(':MaterialPtrLibrary')
-    compile 'com.github.xxl6097:okhttputils:2.4.1'
+    //    compile 'com.github.xxl6097:okhttputils:2.4.1'
     compile 'com.alibaba:fastjson:1.2.40'
     compile project(':CallKit')
     compile project(':CallLib')
@@ -80,7 +90,6 @@ dependencies {
     compile project(':FlycoDialog_Lib')
     compile project(':citypickerview')
     compile 'cn.yipianfengye.android:zxing-library:2.2'
-
     //    compile 'cn.jzvd:jiaozivideoplayer:6.2.3'
     //    compile 'com.contrarywind:Android-PickerView:3.2.7'
     compile files('libs/AMap_Channel_Location_V1.4.0_20160708.jar')
@@ -88,15 +97,20 @@ dependencies {
     compile files('libs/AMap_2DMap_V2.9.0_20160525.jar')
     //greendao依赖
     compile 'org.greenrobot:greendao:3.2.2'
-
-    compile 'com.android.support:multidex:1.0.2'//解决65535
-
+    compile 'com.android.support:multidex:1.0.2'
+    //解决65535
     //添加rjava 和retrofit依赖*****************************************---BEGIN
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
     compile 'io.reactivex.rxjava2:rxjava:2.1.7'
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
-//    implementation 'com.squareup.okhttp3:okhttp:3.9.1'
+    //    implementation 'com.squareup.okhttp3:okhttp:3.9.1'
+    //    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
     compile 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
     //添加rjava 和retrofit依赖*****************************************---END
+    //************************检查内存泄漏***************************
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+    //************************检查内存泄漏***************************
+//    implementation files('libs/jpinyin-1.0.jar')
 }

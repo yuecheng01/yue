@@ -11,6 +11,10 @@ import com.yuecheng.yue.base.YUE_BaseActivitySlideBack;
 import com.yuecheng.yue.base.YUE_BaseAppManager;
 import com.yuecheng.yue.ui.activity.YUE_ISettingsView;
 import com.yuecheng.yue.ui.presenter.YUE_SettingsViewPresenter;
+import com.yuecheng.yue.util.YUE_ToastUtils;
+import com.yuecheng.yue.util.inject.CheckNet;
+import com.yuecheng.yue.util.inject.OnClick;
+import com.yuecheng.yue.util.inject.ViewUtils;
 import com.yuecheng.yue.widget.selector.YUE_BackResUtils;
 
 /**
@@ -30,12 +34,17 @@ public class YUE_SettingsActivity extends YUE_BaseActivitySlideBack implements V
 
     @Override
     protected void initViewsAndEvents() {
+        ViewUtils.inject(this);
         initToolBar();
         initViews();
         initDataEvents();
 
     }
-
+    @CheckNet
+    @OnClick(R.id.aboutyue)
+    public void checkNewVersion(View v){
+        startActivity(AboutYueActivity.class);
+    }
     private void initToolBar() {
         Toolbar mToolBar = findView(R.id.toolbar);
         setSupportActionBar(mToolBar);

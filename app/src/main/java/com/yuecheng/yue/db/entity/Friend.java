@@ -21,6 +21,20 @@ import org.greenrobot.greendao.annotation.Generated;
                                 @Transient 标识这个字段是自定义的不会创建到数据库表里*/
 @Entity
 public class Friend {
+    @Override
+    public String toString() {
+        return "Friend{" +
+                "id=" + id +
+                ", nickName='" + nickName + '\'' +
+                ", portraitUri='" + portraitUri + '\'' +
+                ", displayName='" + displayName + '\'' +
+                ", timeStamp='" + timeStamp + '\'' +
+                ", nickNameSpelling='" + nickNameSpelling + '\'' +
+                ", displayNameSpelling='" + displayNameSpelling + '\'' +
+                ", letters='" + letters + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                '}';
+    }
 
     private Long id;
     private String nickName;

@@ -22,7 +22,7 @@
             <LinearLayout
                 android:id="@+id/setusericon"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp48"
+                android:layout_height="@dimen/dp56"
                 android:layout_marginTop="@dimen/dp16"
                 android:background="@drawable/btn_list_item_bg"
                 android:orientation="horizontal">
@@ -37,11 +37,12 @@
                     android:textSize="@dimen/sp14" />
 
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_gravity="center"
+                    android:id="@+id/head_icon"
+                    android:layout_width="@dimen/dp48"
+                    android:layout_height="@dimen/dp48"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginRight="@dimen/dp16"
-                    android:src="@drawable/right_arrow__shap" />
+                    android:src="@drawable/plugin_camera_no_pictures" />
             </LinearLayout>
 
             <LinearLayout

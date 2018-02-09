@@ -1,9 +1,13 @@
 package com.yuecheng.yue.ui.activity.impl;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -29,6 +33,7 @@ public class YUE_SetUserInfoActivity extends YUE_BaseActivitySlideBack implement
     private TextView mUserBirthday;
     private TextView mUserAddressSelect;
     private TextView mHomeAddress;
+    private ImageView mHeadIcon;
 
 
     @Override
@@ -52,6 +57,23 @@ public class YUE_SetUserInfoActivity extends YUE_BaseActivitySlideBack implement
 
         ab.setTitle("编辑资料");
         mToolBar.setTitleTextColor(getResources().getColor(R.color.white));
+        mToolBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.action_finish:
+                        mPresenter.submitUpdateInfo();
+                        break;
+                }
+                return true;
+            }
+        });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_finish,menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     private void initDataEvents() {
@@ -59,7 +81,7 @@ public class YUE_SetUserInfoActivity extends YUE_BaseActivitySlideBack implement
         mSetUserIcon.setOnClickListener(this);
         mSetUserSex.setOnClickListener(this);
         mSetUserDisplay.setOnClickListener(this);
-//        处理图像选择后回调监听
+        //  处理图像选择后回调监听
         mPresenter.pickIconListener();
         mSetuserBirtyday.setOnClickListener(this);
         mSetuserAddress.setOnClickListener(this);
@@ -78,7 +100,7 @@ public class YUE_SetUserInfoActivity extends YUE_BaseActivitySlideBack implement
         mUserAddressSelect=findView(R.id.address_select);
         mSetuserHomeAddress=findView(R.id.setuserhomeaddress);
         mHomeAddress=findView(R.id.homeaddress);
-
+        mHeadIcon = findView(R.id.head_icon);
 
     }
 
@@ -127,12 +149,12 @@ public class YUE_SetUserInfoActivity extends YUE_BaseActivitySlideBack implement
     }
 
     @Override
-    public void setUserDesc(String s) {
+    public void setUserSign(String s) {
         mUserDisplay.setText(s);
     }
 
     @Override
-    public String getUserDesc() {
+    public String getUserSign() {
         return  mUserDisplay.getText().toString();
     }
 
@@ -142,13 +164,18 @@ public class YUE_SetUserInfoActivity extends YUE_BaseActivitySlideBack implement
     }
 
     @Override
-    public void setAddressSelect(String addressSelect) {
+    public void setNowAddress(String addressSelect) {
         mUserAddressSelect.setText(addressSelect);
     }
 
     @Override
-    public void setHomeAddressSelect(String homeAdressSelect) {
+    public void setHomeTownAddress(String homeAdressSelect) {
         mHomeAddress.setText(homeAdressSelect);
+    }
+
+    @Override
+    public void setIcon(Uri uri) {
+        mHeadIcon.setImageURI(uri);
     }
 
 

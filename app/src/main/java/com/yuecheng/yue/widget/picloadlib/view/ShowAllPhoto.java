@@ -260,5 +260,9 @@ public class ShowAllPhoto extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(broadcastReceiver);
+        synchronized (PublicWay.activityList){
+            if (PublicWay.activityList.contains(this))
+                PublicWay.activityList.remove(this);
+        }
     }
 }

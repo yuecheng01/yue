@@ -30,23 +30,22 @@ public class InputFilterEx implements InputFilter {
     }
 
     /**
-     *
      * @param source: 将要插入的字符串，来自键盘输入、粘贴
-     * @param start: source的起始位置，为0（暂时没有发现其它值的情况）
-     * @param end: source的长度
-     * @param dest: EditText中已经存在的字符串
+     * @param start:  source的起始位置，为0（暂时没有发现其它值的情况）
+     * @param end:    source的长度
+     * @param dest:   EditText中已经存在的字符串
      * @param dstart: 插入点的位置
-     * @param dend: 插入点的结束位置，一般情况下等于dstart；如果选中一段字符串（这段字符串将会被替换），dstart的值就插入点的结束位置
+     * @param dend:   插入点的结束位置，一般情况下等于dstart；如果选中一段字符串（这段字符串将会被替换），dstart的值就插入点的结束位置
      * @return
      */
     @Override
     public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart,
                                int dend) {
         int destCount = dest.toString().length() + getChineseCount(dest.toString()) +
-                getAZCount(dest.toString());// + (dest.toString().length() - getPointCount(dest.toString()))
-        Log.d("destCount--->",destCount+"");
+                getAZCount(dest.toString())+getPointCount(dest.toString());;
+        Log.d("destCount--->", destCount + "");
         int sourceCount = source.toString().length() + getChineseCount(source.toString()) +
-                getAZCount(source.toString());// + (source.toString().length() - getPointCount(source.toString()))
+                getAZCount(source.toString()) + getPointCount(source.toString());
         String input = "";
         int count = 0;
         int i = 0;
@@ -56,7 +55,7 @@ public class InputFilterEx implements InputFilter {
                     ++i;
                     input = source.subSequence(0, i).toString();
                     count = input.toString().length()
-                            + getChineseCount(input.toString())+getAZCount(input.toString());//+ (input.toString().length() - getPointCount(input.toString()))
+                            + getChineseCount(input.toString()) + getAZCount(input.toString()) + getPointCount(input.toString());
                     if (destCount + count > MAX_EN) {
                         --i;
                     }
@@ -69,7 +68,7 @@ public class InputFilterEx implements InputFilter {
         }
     }
 
-    String regExCh = "[\\u4e00-\\u9fa5]"; // unicode编码，获取汉字字符数
+    String regExCh = "[\u4e00-\u9fa5]"; // unicode编码，获取汉字字符数
 
     private int getChineseCount(String str) {
         int count = 0;
@@ -92,8 +91,9 @@ public class InputFilterEx implements InputFilter {
         }
         return count;
     }
-
-    String regExPo = "((?=[\\\\x21-\\\\x7e]+)[^A-Za-z0-9])"; // 获取非特殊符号字符数
+    //此处正则表达式为手机键盘中特殊符号，手机型号众多，这里匹配了大部分特殊符号，后续如有发现不符合条件的特殊符号，可自行添加完善这个正则，
+    String regExPo = "[`~!@#$%^&*()+=|{}'\":;',\\\\[\\\\]" +
+            ".<>/?~！@#￥%……&*（）——+|{}【】＄€［］〔〕＊『』「」〖〗％《》‘；：￡”～“’。，、？\\\\\\\\]";
 
     private int getPointCount(String str) {
         int count = 0;
@@ -102,6 +102,7 @@ public class InputFilterEx implements InputFilter {
         while (m.find()) {
             count++;
         }
+        Log.d("-->", count + "");
         return count;
     }
 }

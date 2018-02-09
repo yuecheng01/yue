@@ -1,6 +1,7 @@
 package com.yuecheng.yue.http.pinyin;
 
 
+import com.yuecheng.yue.db.entity.Friend;
 import com.yuecheng.yue.ui.bean.YUE_FriendsBean;
 import java.util.Comparator;
 
@@ -34,5 +35,4 @@ public class PinyinComparator implements Comparator<YUE_FriendsBean> {
             return o1.getLetters().compareTo(o2.getLetters());
         }
     }
-
 }

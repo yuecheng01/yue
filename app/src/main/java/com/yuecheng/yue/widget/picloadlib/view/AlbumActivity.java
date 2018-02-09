@@ -142,8 +142,7 @@ public class AlbumActivity extends AppCompatActivity implements View.OnClickList
                             toggleButton.setChecked(false);
                             chooseBt.setVisibility(View.GONE);
                             if (!removeOneData(mDataList.get(position))) {
-                                YUE_ToastUtils.getInstance(AlbumActivity.this).showmessage
-                                        ("超出可选图片张数");
+                                YUE_ToastUtils.showmessage("超出可选图片张数");
                             }
                             return;
                         }
@@ -301,5 +300,9 @@ public class AlbumActivity extends AppCompatActivity implements View.OnClickList
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(broadcastReceiver);
+        synchronized (PublicWay.activityList){
+             if (PublicWay.activityList.contains(this))
+            PublicWay.activityList.remove(this);
+        }
     }
 }

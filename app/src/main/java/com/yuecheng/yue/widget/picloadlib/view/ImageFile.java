@@ -104,4 +104,13 @@ public class ImageFile extends AppCompatActivity {
             return true;
         }
     };
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        synchronized (PublicWay.activityList){
+            if (PublicWay.activityList.contains(this))
+                PublicWay.activityList.remove(this);
+        }
+    }
 }

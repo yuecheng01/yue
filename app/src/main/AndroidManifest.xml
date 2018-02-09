@@ -2,10 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.yuecheng.yue">
-        <!--声明一个权限-->
-    <permission android:name="com.yuecheng.yue" android:protectionLevel="normal"/>
+    <!--声明一个权限-->
+    <permission
+        android:name="com.yuecheng.yue"
+        android:protectionLevel="normal" />
 
-    <uses-permission android:name="com.yuecheng.yue" android:protectionLevel="normal"/>
+    <uses-permission
+        android:name="com.yuecheng.yue"
+        android:protectionLevel="normal" />
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -18,10 +22,10 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS"></uses-permission>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -155,13 +159,23 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.activity.impl.YUE_HomeActivity" />
         </activity>
-        <activity android:name=".ui.activity.impl.ImagePagerActivity"
+        <!--图片预览页面-->
+        <activity
+            android:name=".ui.activity.impl.ImagePagerActivity"
+            android:screenOrientation="portrait"></activity>
+        <!--网页浏览器页面-->
+        <activity
+            android:name=".ui.activity.impl.YUE_WebActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"></activity>
+        <!--添加好友页面-->
+        <activity
+            android:name=".ui.activity.impl.YUE_AddFriendActivity"
+            android:parentActivityName=".ui.activity.impl.YUE_HomeActivity"
             android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".ui.activity.impl.YUE_WebActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTask">
-
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.activity.impl.YUE_HomeActivity" />
         </activity>
         <!--选ze好友界面-->
         <activity
@@ -208,7 +222,7 @@
             android:name=".widget.picloadlib.PhotoPickActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"> />
+            android:windowSoftInputMode="adjustPan">/>
         </activity>
         <activity
             android:name=".widget.picloadlib.view.AlbumActivity"
@@ -259,19 +273,51 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/rc_file_path" />
         </provider>
+
+        <activity
+            android:name=".ui.activity.impl.YUE_ShareActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="android.intent.action.SEND" />
+
+                <data android:mimeType="text/plain" />
+                <data android:mimeType="image/jpeg" />
+                <data android:mimeType="image/png" />
+                <data android:mimeType="application/zip" />
+                <data android:mimeType="application/rar" />
+                <data android:mimeType="audio/amr" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.activity.impl.AboutYueActivity"
+            android:parentActivityName=".ui.activity.impl.YUE_SettingsActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.activity.impl.YUE_SettingsActivity" />
+        </activity>
+
         <provider
             android:name="com.yuecheng.yue.provider.ContactProvider"
             android:authorities="com.yuecheng.yue.provider.ContactProvider"
             android:permission="com.yuecheng.yue">
 
         </provider>
-        <receiver android:name=".notification.YUE_NotificationReceiver"
+
+        <receiver
+            android:name=".notification.YUE_NotificationReceiver"
             android:exported="true">
             <intent-filter>
-                <action android:name="io.rong.push.intent.MESSAGE_ARRIVED"/>
-                <action android:name="io.rong.push.intent.MI_MESSAGE_ARRIVED"/>
-                <action android:name="io.rong.push.intent.MESSAGE_CLICKED"/>
-                <action android:name="io.rong.push.intent.MI_MESSAGE_CLICKED"/>
+                <action android:name="io.rong.push.intent.MESSAGE_ARRIVED" />
+                <action android:name="io.rong.push.intent.MI_MESSAGE_ARRIVED" />
+                <action android:name="io.rong.push.intent.MESSAGE_CLICKED" />
+                <action android:name="io.rong.push.intent.MI_MESSAGE_CLICKED" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".broadcast.NetBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"></action>
             </intent-filter>
         </receiver>
     </application>

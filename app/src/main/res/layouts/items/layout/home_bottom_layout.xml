@@ -15,7 +15,7 @@
         <FrameLayout
             android:id="@+id/flCart"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1">
 
             <TextView
@@ -51,9 +51,9 @@
             android:text="@string/moments" />
 
         <RadioButton
-            android:id="@+id/mine"
+            android:id="@+id/service"
             style="@style/main_activity_tab_style"
             android:drawableTop="@drawable/mine_selector"
-            android:text="@string/mine" />
+            android:text="@string/service" />
     </LinearLayout>
 </merge>

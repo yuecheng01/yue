@@ -18,7 +18,8 @@ import android.widget.Toast;
 import com.yuecheng.yue.R;
 import com.yuecheng.yue.ui.bean.CommentItem;
 import com.yuecheng.yue.util.YUE_AppUtils;
-import com.yuecheng.yue.widget.EmojiEditText.EmojiUtil;
+import com.yuecheng.yue.util.YUE_SharedPreferencesUtils;
+import com.yuecheng.yue.widget.EmojiEditText.utils.SpanStringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -136,9 +137,14 @@ public class CommentListView extends LinearLayout {
         builder.append(": ");
         //转换表情字符
         String contentBodyStr = bean.getContent();
-//        builder.append(UrlUtils.formatUrlString(contentBodyStr));
-        String check = "f0[0-9]{2}|f10[0-7]";              //正则表达式，用来判断消息内是否有表情
-        builder.append(EmojiUtil.getExpressionString(getContext(), contentBodyStr, check));
+
+        builder.append(UrlUtils.formatUrlString(contentBodyStr));
+//        commentTv.setText(SpanStringUtils.getEmotionContent((Integer) YUE_SharedPreferencesUtils.getParam
+//                        (getContext(),"emotion_map_type",0),
+//                getContext(), commentTv,builder.toString()));
+
+//        String check = "f0[0-9]{2}|f10[0-7]";              //正则表达式，用来判断消息内是否有表情
+//        builder.append(EmojiUtil.getExpressionString(getContext(), contentBodyStr, check));
         commentTv.setText(builder);                             //消息具体内容
 
 
@@ -171,15 +177,12 @@ public class CommentListView extends LinearLayout {
     }
 
     @NonNull
-    private SpannableString setClickableSpan(final String textStr, final String id) {
-        SpannableString subjectSpanText = new SpannableString(textStr);
+    private SpannableString setClickableSpan(final String name, final String id) {
+        SpannableString subjectSpanText = new SpannableString(name);
         subjectSpanText.setSpan(new SpannableClickable(itemColor){
                                     @Override
                                     public void onClick(View widget) {
-                                        //todo 点击名字时的事件
-                                        Toast.makeText(YUE_AppUtils.getAppContext(), textStr + " " +
-                                                "&id = " +
-                                                id, Toast.LENGTH_SHORT).show();
+                                        onItemClickListener.onClickCommentName(name,id);
                                     }
                                 }, 0, subjectSpanText.length(),
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -188,6 +191,8 @@ public class CommentListView extends LinearLayout {
 
     public static interface OnItemClickListener{
         public void onItemClick(int position);
+
+        void onClickCommentName(String name, String id);
     }
 
     public static interface OnItemLongClickListener{

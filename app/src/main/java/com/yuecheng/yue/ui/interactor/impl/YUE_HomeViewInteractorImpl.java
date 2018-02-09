@@ -54,9 +54,4 @@ public class YUE_HomeViewInteractorImpl implements YUE_IHomeViewInteractor {
         return fragments;
     }
 
-    @Override
-    public String getToken() {
-        return (String) YUE_SharedPreferencesUtils.getParam(YUE_AppUtils.getAppContext(), YUE_SPsave.YUE_TOKEN,"");
-    }
-
 }

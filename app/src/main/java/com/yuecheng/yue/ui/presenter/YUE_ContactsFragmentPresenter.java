@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.text.TextUtils;
 
+import com.yuecheng.yue.app.YUE_UserInfoManager;
 import com.yuecheng.yue.db.DBManager;
 import com.yuecheng.yue.db.entity.Friend;
 import com.yuecheng.yue.http.ICommonInteractorCallback;
@@ -42,44 +43,28 @@ public class YUE_ContactsFragmentPresenter extends YUE_BasePresenter {
         mCharacterParser = CharacterParser.getInstance();
     }
 
-    private static List<Friend> friendList = new ArrayList<>();
+    private  List<Friend> friendList;
 
     //获取数据更新联系人列表
     public void getDataUpdateContact() {
-        if (null != friendList && friendList.size() > 0) {
-            YUE_LogUtils.d("friendList.size()-->", friendList.size() + "");
-            List<YUE_FriendsBean> list = new ArrayList<>();
-            for (Friend friend : friendList
-                    ) {
-                YUE_FriendsBean yueFriendsBean = new YUE_FriendsBean();
-                yueFriendsBean.setNickname(friend.getNickName());
-                yueFriendsBean.setPhonenum(friend.getPhoneNumber());
-                list.add(yueFriendsBean);
-            }
-            updateContacts(list);
-            //friendList.clear();在本页面刷新时调用,并且调用用mInteractor.getFriendsList重新从服务端拉取数据,重新存入此集合中,
-            //这里联系人数据缓存至了本地sqlite数据库,无网络的时候只会加载本地数据库存取的联系人信息.刷新时会删除本地信息,从服务端拉取联系人信息,重新存储
-        } else {
-            pullDataFromSever();
-        }
-    }
-
-    public void pullDataFromSever() {
-        mInteractor.getFriendsList(mUserId, "1", new ICommonInteractorCallback() {
+        //从本地数据库读取联系人更新列表
+        YUE_UserInfoManager.getInstance().getFriendList(new ICommonInteractorCallback() {
             @Override
             public void loadSuccess(Object object) {
-                final YUE_FriendsListBean mFriendsList = (YUE_FriendsListBean) object;
-                deleatAllContacts();
-                friendList.clear();
-                final List<YUE_FriendsBean> list = mFriendsList.getValue();
-                YUE_ThreadUtils.runInThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        //todo 存入本地数据库操作
-                        insertIntoSql(list);
+                friendList =(List<Friend>)object;
+                if (null != friendList) {
+                    List<YUE_FriendsBean> list = new ArrayList<>();
+                    for (Friend friend : friendList
+                            ) {
+                        YUE_FriendsBean yueFriendsBean = new YUE_FriendsBean();
+                        yueFriendsBean.setNickname(friend.getNickName());
+                        yueFriendsBean.setPhonenum(friend.getPhoneNumber());
+                        list.add(yueFriendsBean);
                     }
-                });
-                updateContacts(list);
+                    updateContacts(list);
+                } else {
+
+                }
             }
 
             @Override
@@ -89,7 +74,7 @@ public class YUE_ContactsFragmentPresenter extends YUE_BasePresenter {
 
             @Override
             public void loadCompleted() {
-                mView.setRefreshCancle();
+
             }
 
             @Override
@@ -99,32 +84,10 @@ public class YUE_ContactsFragmentPresenter extends YUE_BasePresenter {
         });
     }
 
-    private void insertIntoSql(List<YUE_FriendsBean> list) {
-        for (YUE_FriendsBean yueFriendsBean : list
-                ) {
-            Friend friend = new Friend(null, yueFriendsBean.getNickname(), null,
-                    null, null, null,
-                    null, null, yueFriendsBean.getPhonenum());
-//            DBManager.getInstance().getSession().getFriendDao().insert(friend); //todo 此处异常
-            friendList.add(friend);
-        }
-
-        YUE_LogUtils.d("insert--YUE_FriendsBean", list.size() + "insert Success!");
-        List<Friend> l = DBManager.getInstance().getSession().getFriendDao().loadAll();
-        for (Friend friend : l
-                ) {
-            YUE_LogUtils.d("结果:-->", friend.getNickName() + "," + friend.getPhoneNumber());
-        }
-    }
-
-    //删除所有联系人
-    private void deleatAllContacts() {
-        DBManager.getInstance().getSession().getFriendDao().deleteAll();
-    }
-
     //更新联系人列表
     private void updateContacts(List<YUE_FriendsBean> list) {
 
+       /* //测试contentprovider
         Cursor c = mContext.getContentResolver().query(ContactProvider.URI_CONTACT, null,
                 null, null, null);
         try {
@@ -140,9 +103,7 @@ public class YUE_ContactsFragmentPresenter extends YUE_BasePresenter {
             e.printStackTrace();
         } finally {
 
-        }
-
-
+        }*/
         for (int i = 0; i < list.size(); i++) {
             list.get(i).setNickNameSpelling(mCharacterParser.getSpelling(list.get(i).getNickname()));
             list.get(i).setDisplayNameSpelling(mCharacterParser.getSpelling(list.get(i).getDisplayname()));

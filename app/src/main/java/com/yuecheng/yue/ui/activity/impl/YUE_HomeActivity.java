@@ -30,6 +30,7 @@ import com.yuecheng.yue.ui.presenter.YUE_HomeViewPresenter;
 import com.yuecheng.yue.util.CommonUtils;
 import com.yuecheng.yue.widget.YUE_CircleImageView;
 import com.yuecheng.yue.widget.YUE_NoScrollListView;
+import com.yuecheng.yue.widget.selector.YUE_BackResUtils;
 
 import java.lang.reflect.Method;
 import java.util.List;
@@ -41,7 +42,7 @@ public class YUE_HomeActivity extends YUE_BaseActivityNoSlideBack implements YUE
     private RadioButton mContact;
     private RadioButton mMoment;
     private RadioButton mMine;
-    private YUE_HomeViewPresenter mYUE_homeViewPresenter;
+    private YUE_HomeViewPresenter mPresenter;
     private YUE_NoScrollListView mYUE_dampListView;
     private DrawerLayout mDrawerLayout;
     private FrameLayout mSearchLayout;
@@ -59,37 +60,17 @@ public class YUE_HomeActivity extends YUE_BaseActivityNoSlideBack implements YUE
 
     @Override
     protected void initViewsAndEvents() {
-        mYUE_homeViewPresenter = new YUE_HomeViewPresenter(this, this);
+        mPresenter = new YUE_HomeViewPresenter(this, this);
         initToolBar();
         initView();
         setViewEvents();
 
-
-        mYUE_homeViewPresenter.getdata();
-        mYUE_dampListView.setAdapter(mYUE_homeViewPresenter.getAdapter());
+        mYUE_dampListView.setAdapter(mPresenter.getAdapter());
+        mPresenter.upData();
 
         clearButtonStatues();
         mChat.setChecked(true);
-        mYUE_homeViewPresenter.loadView();
-        mYUE_homeViewPresenter.connectRong();
-
-        //设置左上角的图标响应
-//        getSupportActionBar().setHomeButtonEnabled(true);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        mToolBar.setNavigationIcon(R.mipmap.haha); // API21以上才支持此方法修改返回按钮样式,此处我采取自己加一个不再用系统的返回按钮
-//        mActionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolBar, 0, 0) {
-//            @Override
-//            public void onDrawerClosed(View drawerView) {
-//                super.onDrawerClosed(drawerView);
-//            }
-//
-//            @Override
-//            public void onDrawerOpened(View drawerView) {
-//                super.onDrawerOpened(drawerView);
-//            }
-//        };
-//        mActionBarDrawerToggle.syncState();
-//        mDrawerLayout.setDrawerListener(mActionBarDrawerToggle); //设置侧滑监听
+        mPresenter.loadView();
 
     }
 
@@ -113,22 +94,25 @@ public class YUE_HomeActivity extends YUE_BaseActivityNoSlideBack implements YUE
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
-                    case R.id.action_startchat:
+                    case R.id.action_startchat://发起聊天
                         startActivity(YUE_SelectFriendsActivity.class);
                         break;
-                    case R.id.action_joinfriend:
-                        startActivity(YUE_SearchFriendActivity.class);
+                    case R.id.action_joinfriend://添加好友
+                        startActivity(YUE_AddFriendActivity.class);
                         break;
-                    case R.id.action_creategroup:
-                        startActivity(YUE_SelectFriendsActivity.class);
+                    case R.id.action_creategroup://创建群组
+                        Intent intent = new Intent(mContext, YUE_SelectFriendsActivity
+                                .class);
+                        intent.putExtra("createGroup", true);
+                        mContext.startActivity(intent);
                         break;
-                    case R.id.action_2weima:
+                    case R.id.action_qrcode://扫一扫
 //                        QRcodeView  qrcode = QRcodeView.getInstance();
 //                        qrcode.show(getSupportFragmentManager(),"tag");
                         startActivityForResult(new Intent(YUE_HomeActivity.this,
                                 YUE_QRcodeActivity.class), REQUEST_CODE);
                         break;
-                    case R.id.action_forhelp:
+                    case R.id.action_forhelp://帮助
                         startActivity(YUE_ForHelpActivity.class);
                         break;
                 }
@@ -221,6 +205,8 @@ public class YUE_HomeActivity extends YUE_BaseActivityNoSlideBack implements YUE
     }
 
     private void setViewEvents() {
+        //设置底部导航栏字体的背景颜色selector
+        setRadioButtonTextBgColor(mChat, mContact, mMoment, mMine);
         mChat.setOnClickListener(this);
         mContact.setOnClickListener(this);
         mMoment.setOnClickListener(this);
@@ -234,7 +220,8 @@ public class YUE_HomeActivity extends YUE_BaseActivityNoSlideBack implements YUE
         mChat = findView(R.id.chat);
         mContact = findView(R.id.contact);
         mMoment = findView(R.id.moment);
-        mMine = findView(R.id.mine);
+        mMine = findView(R.id.service);
+
         mYUE_dampListView = findView(R.id.lv_setting);
 
         mDrawerLayout = findView(R.id.drawer);
@@ -243,6 +230,13 @@ public class YUE_HomeActivity extends YUE_BaseActivityNoSlideBack implements YUE
         mSettings = findView(R.id.settings);
         mChangeThem = findView(R.id.changethem);
         mSearchLayout = findView(R.id.searchlayout);
+    }
+
+    private void setRadioButtonTextBgColor(RadioButton... radioButton) {
+        for (RadioButton r : radioButton
+                ) {
+            r.setTextColor(YUE_BackResUtils.getInstance(mContext).getTextColorDrawable());
+        }
     }
 
 
@@ -255,23 +249,26 @@ public class YUE_HomeActivity extends YUE_BaseActivityNoSlideBack implements YUE
 
     @Override
     public void onClick(View v) {
-        clearButtonStatues();
         switch (v.getId()) {
             case R.id.chat:
+                clearButtonStatues();
                 mChat.setChecked(true);
-                mYUE_homeViewPresenter.loadFragments(0);
+                mPresenter.loadFragments(0);
                 break;
             case R.id.contact:
+                clearButtonStatues();
                 mContact.setChecked(true);
-                mYUE_homeViewPresenter.loadFragments(1);
+                mPresenter.loadFragments(1);
                 break;
             case R.id.moment:
+                clearButtonStatues();
                 mMoment.setChecked(true);
-                mYUE_homeViewPresenter.loadFragments(2);
+                mPresenter.loadFragments(2);
                 break;
-            case R.id.mine:
+            case R.id.service:
+                clearButtonStatues();
                 mMine.setChecked(true);
-                mYUE_homeViewPresenter.loadFragments(3);
+                mPresenter.loadFragments(3);
                 break;
             case R.id.toolbar_ic_back:
                 mDrawerLayout.openDrawer(Gravity.LEFT);
@@ -283,7 +280,7 @@ public class YUE_HomeActivity extends YUE_BaseActivityNoSlideBack implements YUE
 
                 break;
             case R.id.changethem:
-                mYUE_homeViewPresenter.changeThem();
+                mPresenter.changeThem();
                 break;
         }
     }

@@ -96,7 +96,7 @@
         <item name="android:gravity">center_vertical</item>
         <!--<item name="android:textColor">?android:attr/textColorSecondary</item>-->
         <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">@dimen/dp16</item>
+        <item name="android:textSize">@dimen/sp14</item>
     </style>
     <style name="register">
         <item name="android:layout_width">match_parent</item>
@@ -107,7 +107,7 @@
         <item name="android:gravity">center_vertical</item>
         <!--<item name="android:textColor">?android:attr/textColorSecondary</item>-->
         <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">@dimen/dp16</item>
+        <item name="android:textSize">@dimen/sp14</item>
     </style>
 
     <style name="main_activity_tab_style">
@@ -120,7 +120,7 @@
         <item name="android:background">@color/white</item>
         <item name="android:button">@null</item>
         <item name="android:textSize">@dimen/sp12</item>
-        <item name="android:textColor">@color/selector_tab_text_color</item>
+        <!--<item name="android:textColor">@color/selector_tab_text_color</item>-->
     </style>
 
     <style name="home_wait_text_num_style">
@@ -162,9 +162,13 @@
         <item name="android:layout_marginRight">@dimen/dp16</item>
     </style>
 
-    <style name="rememberpwdcheck" parent="@android:style/Widget.CompoundButton.CheckBox">
-        <!--<item name="android:checked">@color/colorAccent</item>-->
-        <!--<item name="android:checkedButton">@color/white</item>-->
+    <style name="mycheckboxstyle" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:checked">@color/colorPrimary</item>
+        <item name="android:checkedButton">@color/white</item>
+    </style>
+    <style name="mycheckboxstyle2" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:checked">@color/colorPrimary</item>
+        <item name="android:checkedButton">@color/aeaeae</item>
     </style>
     <!-- 防止欢迎页白屏或者黑屏，设置图片 -->
     <style name="SplashTheme" parent="defaultThem">
@@ -181,8 +185,8 @@
         <item name="android:textSize">@dimen/sp12</item>
         <item name="android:paddingLeft">@dimen/dp8</item>
         <item name="android:paddingRight">@dimen/dp8</item>
-        <item name="android:paddingTop">@dimen/dp2</item>
-        <item name="android:paddingBottom">@dimen/dp2</item>
+        <item name="android:paddingTop">@dimen/dp4</item>
+        <item name="android:paddingBottom">@dimen/dp4</item>
         <item name="android:gravity">center</item>
         <item name="android:background">@drawable/shape_toast</item>
     </style>

@@ -1,14 +1,19 @@
 package com.yuecheng.yue.base;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -33,7 +38,7 @@ public abstract class YUE_BaseActivitySlideBack extends SlideBackActivity {
     protected int mScreenHeight = 0;
     protected float mScreenDensity = 0.0f;
     protected boolean statusBarCompat = true;
-
+    protected String TAG = getClass().getSimpleName();
     /**
      * context
      */
@@ -134,7 +139,6 @@ public abstract class YUE_BaseActivitySlideBack extends SlideBackActivity {
     @Override
     public void finish() {
         super.finish();
-        YUE_BaseAppManager.getInstance().removeActivity(this);
 //        overridePendingTransition(R.anim.right_in, R.anim.right_out);
     }
 
@@ -147,10 +151,11 @@ public abstract class YUE_BaseActivitySlideBack extends SlideBackActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        YUE_BaseAppManager.getInstance().removeActivity(this);
     }
 
     protected void ShowMessage(String s) {
-        YUE_ToastUtils.getInstance(this).showmessage(s);
+        YUE_ToastUtils.showmessage(s);
     }
 
     protected void showSnackBar(View v,String s){
@@ -160,5 +165,52 @@ public abstract class YUE_BaseActivitySlideBack extends SlideBackActivity {
         //设置按钮文字颜色
         snackBar.setActionTextColor(Color.WHITE);
         snackBar.show();
+    }
+    public interface OnBooleanListener {
+        void onClick(boolean bln);
+    }
+    private OnBooleanListener onPermissionListener;
+    public void onPermissionRequests(String permission, OnBooleanListener onBooleanListener) {
+        onPermissionListener = onBooleanListener;
+        Log.d(TAG, "0");
+        if (ContextCompat.checkSelfPermission(this,
+                permission)
+                != PackageManager.PERMISSION_GRANTED) {
+            // Should we show an explanation?
+            Log.d(TAG, "1");
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.READ_CONTACTS)) {
+                //权限已有
+                onPermissionListener.onClick(true);
+            } else {
+                //没有权限，申请一下
+                ActivityCompat.requestPermissions(this,
+                        new String[]{permission},
+                        1);
+            }
+        }else{
+            onPermissionListener.onClick(true);
+            Log.d(TAG, "2"+ContextCompat.checkSelfPermission(this,
+                    permission));
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == 1) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                //权限通过
+                if (onPermissionListener != null) {
+                    onPermissionListener.onClick(true);
+                }
+            } else {
+                //权限拒绝
+                if (onPermissionListener != null) {
+                    onPermissionListener.onClick(false);
+                }
+            }
+            return;
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }

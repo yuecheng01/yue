@@ -103,6 +103,12 @@ public class ZoomPhotoView extends DialogFragment implements ViewPager.OnPageCha
         vpPhoto.setLayoutParams(params);
         adapter = new PhotoAdapter(this, mList,progressBar);
         vpPhoto.setAdapter(adapter);
+        adapter.addOnPageClickListener(new PhotoAdapter.OnPageClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                mOnPageClickListener.onPicClick( view, position);
+            }
+        });
         vpPhoto.setCurrentItem(0, true);
         //设置ViewPager页面改变的监听器
         vpPhoto.addOnPageChangeListener(this);
@@ -152,6 +158,9 @@ public class ZoomPhotoView extends DialogFragment implements ViewPager.OnPageCha
 //        mList.addAll(images);
     }
 
+    public void addPicClicListener(onPageClickListener onPageClickListener){
+        this.mOnPageClickListener = onPageClickListener;
+    }
     //  初始化控件
     private void initView() {
         //获得我们创建对象时设置的属性
@@ -233,7 +242,6 @@ public class ZoomPhotoView extends DialogFragment implements ViewPager.OnPageCha
         float size;
         int bacColor;
         int currentItem;
-
         public ZoomPhotoCreator color(int textColor) {
             this.color = textColor;
             return this;
@@ -253,10 +261,12 @@ public class ZoomPhotoView extends DialogFragment implements ViewPager.OnPageCha
             this.currentItem = currentItem;
             return this;
         }
-
         public ZoomPhotoView build() {
             return Instance.Instance;
         }
-
+    }
+    private  onPageClickListener mOnPageClickListener;
+    public interface onPageClickListener{
+        void onPicClick(View view, int position);
     }
 }

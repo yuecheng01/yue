@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="rememberpwdcheck" parent="@android:style/Widget.Material.CompoundButton.CheckBox">
-        <item name="android:colorControlActivated">@color/colorAccent</item>
-        <item name="android:colorControlNormal">@color/colorPrimary</item>
+    <style name="mycheckboxstyle" parent="@android:style/Widget.Material.CompoundButton.CheckBox">
+        <item name="android:colorControlActivated">@color/colorPrimary</item>
+        <item name="android:colorControlNormal">@color/white</item>
+    </style>
+    <style name="mycheckboxstyle2" parent="@android:style/Widget.Material.CompoundButton.CheckBox">
+        <item name="android:colorControlActivated">@color/colorPrimary</item>
+        <item name="android:colorControlNormal">@color/aeaeae</item>
     </style>
 
     <!--<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -52,4 +56,15 @@
     </style>
 
     <!--app _____________________________________________________________________________________________________________________them-->
+    <!--appbar style-->
+    <style name="ToolbarPopupTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <!-- <item name="android:colorBackground">@color/white</item>-->
+        <item name="android:actionMenuTextColor">@color/white</item> <!--  敲定颜色-->
+        <item name="android:textSize">18sp</item> <!--  搞掂字体大小-->
+        <item name="actionOverflowMenuStyle">@style/OverflowMenuStyle</item> <!--新增一个item，用于控制menu-->
+    </style>
+    <style name="OverflowMenuStyle" parent="Widget.AppCompat.Light.PopupMenu.Overflow">
+        <item name="overlapAnchor">false</item>  <!--把该属性改为false即可使menu位置位于toolbar之下-->
+
+    </style>
 </resources>

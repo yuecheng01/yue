@@ -55,12 +55,6 @@ public class PraiseListView extends TextView {
         initAttrs(attrs);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public PraiseListView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        initAttrs(attrs);
-    }
-
     private void initAttrs(AttributeSet attrs) {
         TypedArray typedArray = getContext().getTheme().obtainStyledAttributes(attrs, R.styleable
                 .PraiseListView,0,0);

@@ -9,6 +9,8 @@ int anim _slide_right_out 0x7f040007
 int anim actionsheet_dialog_in 0x7f040008
 int anim actionsheet_dialog_out 0x7f040009
 int anim open_rp 0x7f04000a
+int anim pop_win_content_fade_in 0x7f04000b
+int anim pop_win_content_fade_out 0x7f04000c
 int attr allowEmpty 0x7f010006
 int attr bankground 0x7f010001
 int attr content 0x7f010000

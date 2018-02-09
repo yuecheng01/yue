@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/CoordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/aeaeae"
+    android:background="@color/white"
     android:orientation="vertical"
     android:fitsSystemWindows="true">
 
@@ -28,6 +28,7 @@
     </android.support.v7.widget.Toolbar>
 
     <RelativeLayout
+        android:layout_below="@id/toolbar"
         android:id="@+id/bodyLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -42,11 +43,12 @@
             app:scrollbarStyle="outsideOverlay">
 
         </com.malinskiy.superrecyclerview.SuperRecyclerView>
-        <!--回復消息時顯示的輸入框-->
-        <include
-            layout="@layout/layout_editview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true" />
+
     </RelativeLayout>
-</LinearLayout>
+    <!--回復消息時顯示的輸入框-->
+    <include
+        layout="@layout/layout_editview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true" />
+</RelativeLayout>

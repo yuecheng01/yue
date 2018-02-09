@@ -1,6 +1,7 @@
 package com.yuecheng.yue.widget.selector;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -17,7 +18,7 @@ import com.yuecheng.yue.util.YUE_AppUtils;
  */
 
 public class YUE_BackResUtils {
-    private static Context mContext;
+    private Context mContext;
 
     private YUE_BackResUtils(Context context) {
         this.mContext = context;
@@ -127,4 +128,16 @@ public class YUE_BackResUtils {
         drawable.setColor(CommonUtils.getColorByAttrId(mContext,R.attr.colorPrimary));
         return drawable;
     }
+    public ColorStateList  getTextColorDrawable(){
+        int[][] states = new int[2][];
+        states[0] =  new int[]{android.R.attr.state_checked};
+        states[1] = new int[]{};
+        int[] colors = new int[]{CommonUtils.getColorByAttrId(mContext, R.attr.colorPrimary),
+                mContext.getResources().getColor(R.color.F888888)};
+        ColorStateList stateDrawable = new ColorStateList(states,colors);
+        return stateDrawable;
+    }
+
+
+
 }

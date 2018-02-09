@@ -10,7 +10,4 @@ import com.yuecheng.yue.http.ICommonInteractorCallback;
 
 public interface YUE_IContactsInteractor {
 
-
-    void getFriendsList(String userId, String statues,ICommonInteractorCallback
-                        iCommonInteractorCallback);
 }

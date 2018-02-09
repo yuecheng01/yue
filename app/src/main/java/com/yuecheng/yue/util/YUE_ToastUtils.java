@@ -1,61 +1,45 @@
 package com.yuecheng.yue.util;
 
 import android.app.Activity;
-import android.app.Application;
-import android.graphics.Color;
+import android.content.Context;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yuecheng.yue.R;
 
-import static android.graphics.Color.BLACK;
-
 /**
  * Created by yuecheng on 2017/10/30.
  */
 
-public class YUE_ToastUtils extends Toast {
-    /**
-     * Construct an empty Toast object.  You must call {@link #setView} before you
-     * can call {@link #show}.
-     *
-     * @param context The context to use.  Usually your {@link Application}
-     *                or {@link Activity} object.
-     */
-    private static YUE_ToastUtils mInstance = null;
+public class YUE_ToastUtils {
     private static TextView tvToast;
-    private static Activity mContext;
-    private YUE_ToastUtils(Activity context) {
-        super(context);
-        this.mContext =context;
-        tvToast = (TextView) LayoutInflater.from(context).inflate(R.layout.widget_toast_layout, null);
-//        tvToast = new TextView(mContext);
-//        LinearLayout.LayoutParams parms = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT,Gravity.CENTER);
-//        tvToast.setLayoutParams(parms);
-//        tvToast.setTextSize(12);
-//        tvToast.setTextColor(Color.WHITE);
-//        tvToast.setBackgroundColor(Color.BLACK);
+    private static Toast mToast;
+
+    private YUE_ToastUtils() {
     }
-    public static YUE_ToastUtils getInstance(Activity a){
-        if (null == mInstance){
-            mInstance = new YUE_ToastUtils(a);
+
+    private static void getToast(Context context) {
+        if (mToast == null) {
+            mToast = new Toast(context);
         }
-        return mInstance;
+        if (tvToast == null) {
+            tvToast = (TextView) LayoutInflater.from(context).inflate(R.layout.widget_toast_layout, null);
+        }
+        mToast.setView(tvToast);
     }
-    public void showmessage(final Object message){
-        mContext.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                tvToast.setText(message + "");
-                mInstance.setGravity(Gravity.CENTER, 0, CommonUtils.getScreenHeight(mContext)/3);
-                mInstance.setDuration(Toast.LENGTH_SHORT);
-                mInstance.setView(tvToast);
-                mInstance.show();
-            }
-        });
+
+    public static void showmessage( final Object message) {
+        getToast(YUE_AppUtils.getAppContext());
+        tvToast.setText(message + "");
+        //居下
+//                mInstance.setGravity(Gravity.CENTER, 0, CommonUtils.getScreenHeight(mContext) / 3);
+        //居中
+        mToast.setGravity(Gravity.CENTER, 0, 0);
+        mToast.setDuration(Toast.LENGTH_SHORT);
+        mToast.setView(tvToast);
+        mToast.show();
+
     }
 }

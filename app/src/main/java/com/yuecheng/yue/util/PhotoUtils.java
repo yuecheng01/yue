@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -19,7 +20,7 @@ import java.util.List;
 
 public class PhotoUtils {
 
-    private final String tag = PhotoUtils.class.getSimpleName();
+    private final String tag = getClass().getSimpleName();
 
     /**
      * 裁剪图片成功后返回
@@ -56,8 +57,10 @@ public class PhotoUtils {
         try {
             //每次选择图片吧之前的图片删除
             clearCropFile(buildUri(activity));
-
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION); //添加这一句表示对目标应用临时授权该Uri所代表的文件
+            }
             intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, buildUri(activity));
             if (!isIntentAvailable(activity, intent)) {
@@ -120,6 +123,9 @@ public class PhotoUtils {
 
     private boolean corp(Activity activity, Uri uri) {
         Intent cropIntent = new Intent("com.android.camera.action.CROP");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            cropIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        }
         cropIntent.setDataAndType(uri, "image/*");
         cropIntent.putExtra("crop", "true");
         cropIntent.putExtra("aspectX", 1);
@@ -227,12 +233,12 @@ public class PhotoUtils {
         void onPhotoCancel();
     }
 
-    public OnPhotoResultListener getOnPhotoResultListener() {
+    /*public OnPhotoResultListener getOnPhotoResultListener() {
         return onPhotoResultListener;
     }
 
     public void setOnPhotoResultListener(OnPhotoResultListener onPhotoResultListener) {
         this.onPhotoResultListener = onPhotoResultListener;
-    }
+    }*/
 
 }

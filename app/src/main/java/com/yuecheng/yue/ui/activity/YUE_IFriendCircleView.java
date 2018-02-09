@@ -17,11 +17,6 @@ import java.util.List;
 
 public interface YUE_IFriendCircleView {
     FragmentManager getSupportFManager();
-
-    void jump2Activity(Class a );
-
-    void showZan();
-
     void update2loadData(int loadType, List<CircleItem> datas);
 
     void update2DeleteCircle(String circleId);

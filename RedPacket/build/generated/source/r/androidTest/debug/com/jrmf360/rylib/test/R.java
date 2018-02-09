@@ -20,6 +20,8 @@ public final class R {
         public static final int actionsheet_dialog_in=0x7f040008;
         public static final int actionsheet_dialog_out=0x7f040009;
         public static final int open_rp=0x7f04000a;
+        public static final int pop_win_content_fade_in=0x7f04000b;
+        public static final int pop_win_content_fade_out=0x7f04000c;
     }
     public static final class attr {
         /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".

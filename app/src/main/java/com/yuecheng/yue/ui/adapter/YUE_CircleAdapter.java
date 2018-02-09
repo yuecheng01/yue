@@ -6,8 +6,6 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-
 import com.yuecheng.yue.R;
 import com.yuecheng.yue.ui.bean.ActionItem;
 import com.yuecheng.yue.ui.bean.CommentConfig;
@@ -29,6 +27,7 @@ import com.yuecheng.yue.widget.circle.SnsPopupWindow;
 import java.util.List;
 
 /**
+ * 朋友圈页面moments列表适配器
  * Created by Administrator on 2018/1/11.
  */
 
@@ -138,9 +137,7 @@ public class YUE_CircleAdapter extends BaseRecycleViewAdapter {
                         public void onClick(int position) {
                             String userName = favortDatas.get(position).getUser().getName();
                             String userId = favortDatas.get(position).getUser().getId();
-                            Toast.makeText(YUE_AppUtils.getAppContext(), userName + " &id = " + userId,
-                                    Toast
-                                            .LENGTH_SHORT).show();
+                            mCallBack.clickName(userName,userId);
                         }
                     });
                     holder.praiseListView.setDatas(favortDatas);
@@ -170,6 +167,10 @@ public class YUE_CircleAdapter extends BaseRecycleViewAdapter {
                                 mCallBack.showEditTextBody(config);
                             }
                             }
+                        }
+                        @Override
+                        public void onClickCommentName(String name, String id) {
+                            mCallBack.onClickCommentName(name,id);
                         }
                     });
                     holder.commentList.setOnItemLongClickListener(new CommentListView.OnItemLongClickListener() {
@@ -335,5 +336,9 @@ public class YUE_CircleAdapter extends BaseRecycleViewAdapter {
         void deleteFavort(int circlePosition, String favorId);
 
         void preViewPic(View view, int position,List<PhotoInfo> photos);
+
+        void clickName(String userName, String userId);
+
+        void onClickCommentName(String name, String id);
     }
 }

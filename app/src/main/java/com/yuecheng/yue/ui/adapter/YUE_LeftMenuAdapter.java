@@ -21,8 +21,7 @@ public class YUE_LeftMenuAdapter extends BaseAdapter {
     private List<Map<String, Object>> data;
     private LayoutInflater mInflater;
 
-    public YUE_LeftMenuAdapter(Context context, List<Map<String, Object>> data) {
-        this.data = data;
+    public YUE_LeftMenuAdapter(Context context) {
         this.mInflater = LayoutInflater.from(context);
     }
 
@@ -60,6 +59,11 @@ public class YUE_LeftMenuAdapter extends BaseAdapter {
         mViewholder.img.setImageResource((Integer) data.get(position).get("img"));
         mViewholder.tv.setText((String)data.get(position).get("title"));
         return convertView;
+    }
+
+    public void upData(List<Map<String, Object>> getdata) {
+        this.data = getdata;
+        notifyDataSetChanged();
     }
 
     //ViewHolder静态类

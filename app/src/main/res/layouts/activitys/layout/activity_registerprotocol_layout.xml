@@ -9,6 +9,6 @@
         android:layout_width="match_parent"
         android:textSize="@dimen/sp18"
         android:layout_margin="@dimen/dp16"
-        android:text="The project is open source, and I don't get any benefit from it."
+        android:text="本项目开源,本人未从中获取任何经济利益.\n如果你使用此app,请遵循相关法律,不要发表不良言论!\n\nThe project is open source, and I don't get any benefit from it.\nIf you use this app, follow the relevant laws and don't make bad remarks,please!"
         android:layout_height="match_parent" />
 </LinearLayout>

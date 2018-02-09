@@ -1,13 +1,12 @@
 package com.yuecheng.yue.ui.presenter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
-
 import com.yuecheng.yue.ui.activity.YUE_IFriendCircleView;
-import com.yuecheng.yue.ui.activity.impl.YUE_CommentActivity;
+import com.yuecheng.yue.ui.activity.impl.ImagePagerActivity;
 import com.yuecheng.yue.ui.adapter.YUE_CircleAdapter;
-import com.yuecheng.yue.ui.adapter.YUE_CircleitemAdapter;
 import com.yuecheng.yue.ui.bean.CircleItem;
 import com.yuecheng.yue.ui.bean.CommentConfig;
 import com.yuecheng.yue.ui.bean.CommentItem;
@@ -15,11 +14,13 @@ import com.yuecheng.yue.ui.bean.FavortItem;
 import com.yuecheng.yue.ui.bean.PhotoInfo;
 import com.yuecheng.yue.ui.interactor.YUE_IFriendCircleViewInteractor;
 import com.yuecheng.yue.ui.interactor.impl.YUE_FriendCircleViewInteractorImpl;
+import com.yuecheng.yue.util.YUE_ToastUtils;
 import com.yuecheng.yue.widget.circle.DatasUtil;
 import com.yuecheng.yue.widget.dialogfragment.PhotoAdapter;
 import com.yuecheng.yue.widget.dialogfragment.ZoomPhotoView;
 import com.yuecheng.yue.widget.photoview.PhotoView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -69,6 +70,10 @@ public class YUE_FriendCircleViewPresenter {
             mView.update2DeleteComment(circlePosition, commentItemId);
         }
 
+        /**
+         * 弹出评论框
+         * @param commentConfig
+         */
         @Override
         public void showEditTextBody(CommentConfig commentConfig) {
             mView.updateEditTextBodyVisible(View.VISIBLE, commentConfig);
@@ -111,7 +116,7 @@ public class YUE_FriendCircleViewPresenter {
         @Override
         public void preViewPic(View view, int position, List<PhotoInfo> photos) {
             //first activity to preview
-          /*  //imagesize是作为loading时的图片size
+            //imagesize是作为loading时的图片size
             ImagePagerActivity.ImageSize imageSize = new ImagePagerActivity.ImageSize(view.getMeasuredWidth(), view.getMeasuredHeight());
 
             List<String> photoUrls = new ArrayList<String>();
@@ -119,83 +124,61 @@ public class YUE_FriendCircleViewPresenter {
                 photoUrls.add(photoInfo.url);
             }
             ImagePagerActivity.startImagePagerActivity(mContext
-                    , photoUrls, position, imageSize);*/
+                    , photoUrls, position, imageSize);
 
             //second dialogfragment to preview
-            final ZoomPhotoView zoomPhotoView = ZoomPhotoView
+           /* final ZoomPhotoView zoomPhotoView = ZoomPhotoView
                     .size(12)
                     .bacColor(Color.BLACK)
                     .color(Color.WHITE)
                     .current(position)
                     .build();
-            /**
+            *//**
              * 添加图片数据进去
-             */
+             *//*
             zoomPhotoView.addImages(photos);
-            /**
-             * 弹出Dialog
-             */
-            zoomPhotoView.show(mView.getSupportFManager(), "tag");
-            PhotoAdapter.addOnPageClickListener(new PhotoAdapter.OnPageClickListener() {
+            *//**
+             * 添加预览中的图片点击事件
+             *//*
+            zoomPhotoView.addPicClicListener(new ZoomPhotoView.onPageClickListener() {
                 @Override
-                public void onClick(View v, int position) {
-
-                    PhotoView p = (PhotoView) v;
+                public void onPicClick(View view, int position) {
+                    PhotoView p = (PhotoView)view;
                     zoomPhotoView.dismiss();
                 }
             });
+            *//**
+             * 弹出Dialog
+             *//*
+            zoomPhotoView.show(mView.getSupportFManager(), "tag");*/
         }
+
+        /**
+         * 点赞中人名的点击事件
+         * @param userName
+         * @param userId
+         */
+        @Override
+        public void clickName(String userName, String userId) {
+           YUE_ToastUtils.showmessage(userName + " &id = " +
+                   userId);
+        }
+
+        /**
+         * 评论列表中名字的点击事件
+         * @param name
+         * @param id
+         */
+        @Override
+        public void onClickCommentName(String name, String id) {
+            YUE_ToastUtils.showmessage(name + " &id = " +
+                    id);
+        }
+
     };
 
     public YUE_CircleAdapter getAdapter() {
         return mAdapter;
-    }
-
-    public YUE_CircleitemAdapter.OnItemClickListener getListener() {
-        YUE_CircleitemAdapter.OnItemClickListener listener = new YUE_CircleitemAdapter.OnItemClickListener() {
-
-
-            @Override
-            public void onPhotoItemClick(View view, int position, final List<String> imglist) {
-              /*  //todo 图片
-                final ZoomPhotoView zoomPhotoView = ZoomPhotoView
-                        .size(12)
-                        .bacColor(Color.BLACK)
-                        .color(Color.WHITE)
-                        .current(position)
-                        .build();
-                *//**
-                 * 添加图片数据进去
-                 *//*
-                zoomPhotoView.addImages(imglist);
-
-                *//**
-                 * 弹出Dialog
-                 *//*
-                zoomPhotoView.show(mView.getSupportFManager(), "tag");
-                PhotoAdapter.addOnPageClickListener(new PhotoAdapter.OnPageClickListener() {
-                    @Override
-                    public void onClick(View v, int position) {
-
-                        PhotoView p = (PhotoView) v;
-                        zoomPhotoView.dismiss();
-                    }
-                });*/
-            }
-
-            @Override
-            public void onPingLunClick(int position) {
-                //todo 评论
-                mView.jump2Activity(YUE_CommentActivity.class);
-            }
-
-            @Override
-            public void onDianZanClick(int position) {
-                //todo 点赞
-                mView.showZan();
-            }
-        };
-        return listener;
     }
 
     public void loadData(int loadType) {

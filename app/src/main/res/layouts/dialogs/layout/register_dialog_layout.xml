@@ -28,6 +28,9 @@
         <android.support.design.widget.TextInputEditText
             android:id="@+id/username"
             style="@style/login"
+            android:inputType="phone"
+            android:maxLines="1"
+            android:maxLength="16"
             android:hint="@string/usernamehint" />
     </android.support.design.widget.TextInputLayout>
 
@@ -49,7 +52,6 @@
         android:layout_below="@id/register"
         android:layout_height="wrap_content"
         android:textSize="@dimen/sp14"
-
         android:gravity="center"
         android:textColor="@color/white"/>
     <!--android:text="@string/register_protocol"-->

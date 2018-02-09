@@ -18,26 +18,19 @@ import com.flyco.animation.SlideExit.SlideLeftExit;
 import com.flyco.dialog.entity.DialogMenuItem;
 import com.flyco.dialog.listener.OnOperItemClickL;
 import com.flyco.dialog.widget.ActionSheetDialog;
-import com.flyco.dialog.widget.NormalListDialog;
 import com.yuecheng.yue.R;
 import com.yuecheng.yue.base.YUE_BaseAppManager;
 import com.yuecheng.yue.ui.activity.YUE_IHomeView;
 import com.yuecheng.yue.ui.activity.impl.YUE_HomeActivity;
-import com.yuecheng.yue.ui.activity.impl.YUE_LoginActivity;
 import com.yuecheng.yue.ui.adapter.YUE_LeftMenuAdapter;
 import com.yuecheng.yue.ui.bean.YUE_SPsave;
 import com.yuecheng.yue.ui.interactor.YUE_IHomeViewInteractor;
 import com.yuecheng.yue.ui.interactor.impl.YUE_HomeViewInteractorImpl;
 import com.yuecheng.yue.util.CommonUtils;
-import com.yuecheng.yue.util.YUE_LogUtils;
 import com.yuecheng.yue.util.YUE_SharedPreferencesUtils;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import io.rong.imkit.RongIM;
-import io.rong.imlib.RongIMClient;
 
 /**
  * Created by yuecheng on 2017/10/29.
@@ -50,6 +43,7 @@ public class YUE_HomeViewPresenter {
     private List<Fragment> mlist;
     private boolean isfirst = true;
     public static String TAG = "HomeActivity";
+    private YUE_LeftMenuAdapter mAdapter;
 
 
     public YUE_HomeViewPresenter(Context context, YUE_HomeActivity a) {
@@ -63,7 +57,7 @@ public class YUE_HomeViewPresenter {
     }
 
     public YUE_LeftMenuAdapter getAdapter() {
-        YUE_LeftMenuAdapter mAdapter = new YUE_LeftMenuAdapter(mContext, getdata());
+        mAdapter = new YUE_LeftMenuAdapter(mContext);
         return mAdapter;
     }
 
@@ -73,36 +67,6 @@ public class YUE_HomeViewPresenter {
             //        首页默认加载第一页，消息页
             mHomeView.loadFragments(mlist, 0);
             isfirst = false;
-        }
-    }
-
-    public void connectRong() {
-        String cacheToken = mInteractor.getToken();
-        YUE_LogUtils.i(TAG, cacheToken);
-        if (TextUtils.isEmpty(cacheToken)) {
-            mHomeView.jump2Activity(YUE_LoginActivity.class);
-        } else {
-            if (!RongIM.getInstance().getCurrentConnectionStatus().equals(RongIMClient
-                    .ConnectionStatusListener.ConnectionStatus.CONNECTED)) {
-//                LoadDialog.show(mContext);
-                RongIM.connect(cacheToken, new RongIMClient.ConnectCallback() {
-                    @Override
-                    public void onTokenIncorrect() {
-//                        LoadDialog.dismiss(mContext);
-                    }
-
-                    @Override
-                    public void onSuccess(String s) {
-//                        LoadDialog.dismiss(mContext);
-                        mHomeView.showMessage("链接成功userId--->" + s);
-                    }
-
-                    @Override
-                    public void onError(RongIMClient.ErrorCode e) {
-//                        LoadDialog.dismiss(mContext);
-                    }
-                });
-            }
         }
     }
 
@@ -163,4 +127,8 @@ public class YUE_HomeViewPresenter {
         });*/
     }
 
+    public void upData() {
+       if (mAdapter!=null)
+           mAdapter.upData(getdata());
+    }
 }

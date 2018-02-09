@@ -1,19 +1,26 @@
 package com.yuecheng.yue.widget.picloadlib;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -32,7 +39,9 @@ import com.flyco.dialog.widget.ActionSheetDialog;
 import com.yuecheng.yue.R;
 import com.yuecheng.yue.ui.bean.YUE_SPsave;
 import com.yuecheng.yue.util.CommonUtils;
+import com.yuecheng.yue.util.PhotoUtils;
 import com.yuecheng.yue.util.YUE_SharedPreferencesUtils;
+import com.yuecheng.yue.util.YUE_ToastUtils;
 import com.yuecheng.yue.widget.picloadlib.util.Bimp;
 import com.yuecheng.yue.widget.picloadlib.util.FileUtils;
 import com.yuecheng.yue.widget.picloadlib.util.ImageItem;
@@ -44,9 +53,11 @@ import java.util.ArrayList;
 
 
 public class PhotoPickActivity extends AppCompatActivity {
+    private String TAG = getClass().getSimpleName();
     private GridView mGv;
     private GridAdapter mAdapter;
     public static Bitmap mBitmap;
+    private PhotoUtils mPhotoUtils;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +97,24 @@ public class PhotoPickActivity extends AppCompatActivity {
     }
 
     private void initDataEvents() {
+        mPhotoUtils = new PhotoUtils(new PhotoUtils.OnPhotoResultListener() {
+            @Override
+            public void onPhotoResult(Uri uri) {
+                if (uri != null && !TextUtils.isEmpty(uri.getPath())) {
+//                    mSelectUri = uri;
+//                    mView.setIcon(uri);
+//                    YUE_LogUtils.i(TAG,uri.getEncodedPath());// ------>
+// /storage/emulated/0/crop_file.jpg
+//                    LoadDialog.show(mContext);
+//                    request(GET_QI_NIU_TOKEN);
+                }
+            }
+
+            @Override
+            public void onPhotoCancel() {
+
+            }
+        });
         mAdapter = new GridAdapter(this);
         mGv.setAdapter(mAdapter);
         mAdapter.update();
@@ -131,7 +160,22 @@ public class PhotoPickActivity extends AppCompatActivity {
                                 .activity_translate_out);
                         break;
                     case 1:
-                        photo();
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                            onPermissionRequests(Manifest.permission.CAMERA, new
+                                    OnBooleanListener(){
+                                        @Override
+                                        public void onClick(boolean bln) {
+                                            if (bln){
+                                                mPhotoUtils.takePicture(PhotoPickActivity.this);
+                                            }else {
+                                                YUE_ToastUtils.showmessage("拍照或无法正常使用");
+                                            }
+                                        }
+                                    });
+                        }else {
+                            mPhotoUtils.takePicture(PhotoPickActivity.this);
+                        }
+
                         break;
                 }
                 dialog.dismiss();
@@ -141,6 +185,7 @@ public class PhotoPickActivity extends AppCompatActivity {
 
     private void photo() {
         Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
         startActivityForResult(openCameraIntent, TAKE_PICTURE);
     }
 
@@ -316,6 +361,10 @@ public class PhotoPickActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        synchronized (PublicWay.activityList){
+            if (PublicWay.activityList.contains(this))
+                PublicWay.activityList.remove(this);
+        }
     }
 
     @Override
@@ -342,5 +391,52 @@ public class PhotoPickActivity extends AppCompatActivity {
     protected void onRestart() {
         mAdapter.update();
         super.onRestart();
+    }
+    public interface OnBooleanListener {
+        void onClick(boolean bln);
+    }
+    private OnBooleanListener onPermissionListener;
+    public void onPermissionRequests(String permission, OnBooleanListener onBooleanListener) {
+        onPermissionListener = onBooleanListener;
+        Log.d(TAG, "0");
+        if (ContextCompat.checkSelfPermission(this,
+                permission)
+                != PackageManager.PERMISSION_GRANTED) {
+            // Should we show an explanation?
+            Log.d(TAG, "1");
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.READ_CONTACTS)) {
+                //权限已有
+                onPermissionListener.onClick(true);
+            } else {
+                //没有权限，申请一下
+                ActivityCompat.requestPermissions(this,
+                        new String[]{permission},
+                        1);
+            }
+        }else{
+            onPermissionListener.onClick(true);
+            Log.d(TAG, "2"+ContextCompat.checkSelfPermission(this,
+                    permission));
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == 1) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                //权限通过
+                if (onPermissionListener != null) {
+                    onPermissionListener.onClick(true);
+                }
+            } else {
+                //权限拒绝
+                if (onPermissionListener != null) {
+                    onPermissionListener.onClick(false);
+                }
+            }
+            return;
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }

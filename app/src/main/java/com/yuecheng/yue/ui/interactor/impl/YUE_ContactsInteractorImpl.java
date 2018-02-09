@@ -21,32 +21,4 @@ public class YUE_ContactsInteractorImpl implements YUE_IContactsInteractor{
         super();
     }
 
-    @Override
-    public void getFriendsList(String userId, String statues, final ICommonInteractorCallback l) {
-        ApiServicesManager.getInstence().getYueapi()
-                .getFriendsList(userId,statues)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<YUE_FriendsListBean>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        l.addDisaposed(d);
-                    }
-
-                    @Override
-                    public void onNext(YUE_FriendsListBean yue_friendsListBean) {
-                    l.loadSuccess(yue_friendsListBean);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        l.loadFailed();
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        l.loadCompleted();
-                    }
-                });
-    }
 }

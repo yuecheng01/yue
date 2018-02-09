@@ -34,8 +34,8 @@
             android:visibility="gone" />
 
 
-        <ListView
-            android:id="@+id/dis_friendlistview"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/dis_friendrv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
@@ -54,8 +54,8 @@
 
         <com.yuecheng.yue.widget.SideBar
             android:id="@+id/dis_sidrbar"
-            android:layout_width="30.0dip"
-            android:layout_height="fill_parent"
+            android:layout_width="@dimen/dp24"
+            android:layout_height="match_parent"
             android:layout_gravity="right|center" />
 
     </FrameLayout>

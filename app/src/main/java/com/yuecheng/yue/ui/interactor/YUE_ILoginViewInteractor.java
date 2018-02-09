@@ -23,4 +23,17 @@ public interface YUE_ILoginViewInteractor {
     String getUserPassword();
 
     String getIsRemPwd();
+
+    void submitRegisterInfo(String regPhoneNum,String nickName, String
+            regPassword,
+                            String
+            regPasswordConfir,ICommonInteractorCallback callback);
+
+    void confirMessageCode(String s, ICommonInteractorCallback iCommonInteractorCallback);
+
+    void getIsRegisterOrNotBean(String regPhoneNum, ICommonInteractorCallback iCommonInteractorCallback);
+
+    void getResetPasswordBean(String resetPwdUserId,String mNewPasswordStr, String
+            mNewPasswordFirStr,
+                              ICommonInteractorCallback iCommonInteractorCallback);
 }

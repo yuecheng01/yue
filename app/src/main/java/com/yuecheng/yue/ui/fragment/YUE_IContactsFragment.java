@@ -16,5 +16,7 @@ public interface YUE_IContactsFragment {
 
     List<YUE_FriendsBean> getFriendList();
 
-    void setRefreshCancle();
+    void dismissLoadingDialog();
+
+    void showLoadingDialog();
 }
