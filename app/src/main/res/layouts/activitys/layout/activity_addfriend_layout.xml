@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/common_titlebar_layout" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp56"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/search_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp16"
+            android:layout_marginRight="@dimen/dp16"
+            android:background="@null"
+            android:drawableLeft="@drawable/grey_search"
+            android:drawablePadding="6dp"
+            android:hint="@string/search_phone_number"
+            android:inputType="phone"
+            android:maxLength="11"
+            android:maxLines="1"
+            android:textCursorDrawable="@drawable/color_cursor" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="@dimen/dp16"
+            android:layout_marginRight="@dimen/dp16"
+            android:layout_marginTop="@dimen/dp8"
+            android:background="@color/color_80b5b5b5" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/search_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:visibility="gone"
+        android:orientation="horizontal">
+
+        <com.yuecheng.yue.widget.YUE_CircleImageView
+            android:id="@+id/userprotial"
+            android:layout_marginLeft="@dimen/dp16"
+            android:layout_width="@dimen/dp56"
+            android:layout_height="@dimen/dp56" />
+
+        <TextView
+            android:id="@+id/usernickname"
+            android:layout_marginLeft="@dimen/dp8"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:layout_width="@dimen/dp24"
+            android:layout_height="@dimen/dp24"
+            android:layout_marginRight="@dimen/dp16"
+            android:src="@drawable/right_arrow__shap" />
+    </LinearLayout>
+</LinearLayout>

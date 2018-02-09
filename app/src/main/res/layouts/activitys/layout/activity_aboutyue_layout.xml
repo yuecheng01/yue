@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/common_titlebar_layout"/>
+    <com.yuecheng.yue.widget.YUE_DampScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_marginTop="@dimen/dp100"
+                android:layout_width="@dimen/dp100"
+                android:layout_gravity="center_horizontal"
+                android:src="@mipmap/logo_icon"
+                android:layout_height="@dimen/dp100" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/dp8"
+                android:layout_gravity="center_horizontal"
+                android:text="V1.0.0"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:id="@+id/check_new_version"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/dp16"
+                android:background="@drawable/btn_list_item_bg"
+                android:layout_height="@dimen/dp48">
+                <TextView
+                    android:layout_width="@dimen/dp0"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="@dimen/dp16"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/sp14"
+                    android:layout_gravity="center"
+                    android:text="@string/check_new_version"
+                    />
+                <TextView
+                    android:id="@+id/new_tv"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:layout_width="@dimen/dp56"
+                    android:background="@drawable/cart_dot_shape_red"
+                    android:text="new"
+                    android:layout_height="@dimen/dp24"/>
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="@dimen/dp16"
+                    android:src="@drawable/right_arrow__shap"/>
+            </LinearLayout>
+        </LinearLayout>
+    </com.yuecheng.yue.widget.YUE_DampScrollView>
+
+</LinearLayout>
